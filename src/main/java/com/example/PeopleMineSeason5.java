@@ -19,15 +19,16 @@ import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.structure.*;
 import net.minecraft.structure.processor.StructureProcessorList;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureSpawns;
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import javax.xml.transform.Source;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static net.fabricmc.loader.impl.FabricLoaderImpl.MOD_ID;
 
@@ -66,13 +68,18 @@ public class PeopleMineSeason5 implements ModInitializer {
 			if (itemStack.getItem() == Items.STICK) {
 				// Если предмет в руке - палка, выводим сообщение в чат
 				if (!world.isClient) {
-					player.sendMessage(Text.literal(player.getName() + " использовал палку!"), false);
 
-					Identifier bastionId = new Identifier("minecraft", "bastion_remnant");
-					ServerWorld serverWorld = Objects.requireNonNull(world.getServer()).getOverworld();
-					StructureTemplate structureTemplate = serverWorld.getStructureTemplateManager().getTemplateOrBlank(bastionId);
-					BlockPos blockPos = BlockPos.ofFloored(player.getPos());
-					structureTemplate.place(serverWorld,blockPos , blockPos , new StructurePlacementData(), Random.create(),1);
+
+					if (player.getWorld() instanceof ServerWorld serverWorld) {
+						Identifier bastionId = new Identifier("peoplemineseason5", "test");
+						BlockPos pos = player.getBlockPos();
+						StructureTemplate structureTemplate = serverWorld.getStructureTemplateManager().getTemplateOrBlank(bastionId);
+						structureTemplate.place(serverWorld, pos, pos, new StructurePlacementData(), Random.create(), 2);
+						player.sendMessage(Text.literal(player.getName() + " использовал палку!"), false);
+						player.sendMessage(Text.literal(String.valueOf(player.getWorld())), false);
+						serverWorld.playSound(null,pos.getX(),pos.getY(),pos.getZ(),SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR,SoundCategory.PLAYERS, 1,1);
+
+					}
 
 
 					itemStack.decrement(1);
