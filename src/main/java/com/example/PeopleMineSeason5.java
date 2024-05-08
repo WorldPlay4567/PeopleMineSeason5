@@ -1,8 +1,12 @@
 package com.example;
 
+
+import com.example.items.BluePrint;
 import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
 import com.sun.jna.Structure;
+import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -12,11 +16,10 @@ import net.minecraft.block.StructureBlock;
 import net.minecraft.datafixer.fix.StructureFeatureChildrenPoolElementFix;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemKeys;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -37,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.transform.Source;
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,10 +49,24 @@ import static net.fabricmc.loader.impl.FabricLoaderImpl.MOD_ID;
 
 public class PeopleMineSeason5 implements ModInitializer {
 
-	public static final  String MOD_ID = "PeopleMineSeason5";
+	public static final  String MOD_ID = "peoplemineseason5";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+
+	public static final Item BLUE_PRINT = Items.register(Identifier.of(MOD_ID,"blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
+
+	public static final ItemGroup PEOPLEMINE = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID,"peoplemine5"),
+			PolymerItemGroupUtils.builder().displayName(Text.of("PeopleMine"))
+					.icon(()->new ItemStack(Items.DIAMOND)).entries(((displayContext, entries) -> {
+						entries.add(PeopleMineSeason5.BLUE_PRINT);
+					})).build());
+
+
+
 	@Override
 	public void onInitialize() {
+
+		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
 
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
@@ -59,35 +77,11 @@ public class PeopleMineSeason5 implements ModInitializer {
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			for (ServerPlayerEntity player : players) {
 				// Perform actions for each player on each tick
-				if (player.getInventory().getMainHandStack().getItem() == Items.STICK)
+				if (player.getInventory().getMainHandStack().getItem() == PeopleMineSeason5.BLUE_PRINT)
 					spawnBox(player);
 			}
 		});
-		UseItemCallback.EVENT.register((player, world, hand) -> {
-			ItemStack itemStack = player.getStackInHand(hand);
-			if (itemStack.getItem() == Items.STICK) {
-				// Если предмет в руке - палка, выводим сообщение в чат
-				if (!world.isClient) {
 
-
-					if (player.getWorld() instanceof ServerWorld serverWorld) {
-						Identifier bastionId = new Identifier("peoplemineseason5", "test");
-						BlockPos pos = player.getBlockPos();
-						StructureTemplate structureTemplate = serverWorld.getStructureTemplateManager().getTemplateOrBlank(bastionId);
-						structureTemplate.place(serverWorld, pos, pos, new StructurePlacementData(), Random.create(), 2);
-						player.sendMessage(Text.literal(player.getName() + " использовал палку!"), false);
-						player.sendMessage(Text.literal(String.valueOf(player.getWorld())), false);
-						serverWorld.playSound(null,pos.getX(),pos.getY(),pos.getZ(),SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR,SoundCategory.PLAYERS, 1,1);
-
-					}
-
-
-					itemStack.decrement(1);
-				}
-				return new TypedActionResult<>(ActionResult.SUCCESS, itemStack);
-			}
-			return new TypedActionResult<>(ActionResult.PASS, itemStack);
-		});
 	}
 
 
