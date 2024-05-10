@@ -6,10 +6,13 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.item.PolymerItemUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -27,10 +30,15 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+import java.util.List;
+
+
 public class BluePrint extends Item implements PolymerItem {
 
-    PolymerModelData modelData = PolymerResourcePackUtils.requestModel(Items.PAPER, new Identifier(PeopleMineSeason5.MOD_ID, "item/blue_print"));
+    private final PolymerModelData modelData = PolymerResourcePackUtils.requestModel(Items.PAPER, new Identifier(PeopleMineSeason5.MOD_ID, "item/blue_print"));
     public BluePrint(Settings settings) {
+
         super(settings);
     }
     @Override
@@ -55,6 +63,12 @@ public class BluePrint extends Item implements PolymerItem {
                 itemStack.decrement(1);
             }
             return new TypedActionResult<>(ActionResult.SUCCESS, itemStack);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+
+        super.appendTooltip(stack, context, tooltip, type);
     }
 
     @Override

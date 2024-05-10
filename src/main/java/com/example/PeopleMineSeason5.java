@@ -2,9 +2,11 @@ package com.example;
 
 
 import com.example.items.BluePrint;
+import com.example.items.TremblingCrystal;
 import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
 import com.sun.jna.Structure;
+import eu.pb4.polymer.core.api.item.PolymerItemComponent;
 import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
@@ -38,7 +40,7 @@ import net.minecraft.world.StructureSpawns;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import net.minecraft.text.Text;
 import javax.xml.transform.Source;
 import java.awt.*;
 import java.util.List;
@@ -52,21 +54,22 @@ public class PeopleMineSeason5 implements ModInitializer {
 	public static final  String MOD_ID = "peoplemineseason5";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-
-	public static final Item BLUE_PRINT = Items.register(Identifier.of(MOD_ID,"blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
-
+//trembling_crystal
+	public static final Item BLUE_PRINT = Items.register(Identifier.of(MOD_ID, "blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
+	public static final Item TREMBLING_CRYSTAL = Items.register(Identifier.of(MOD_ID, "trembling_crystal"),new TremblingCrystal(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
 	public static final ItemGroup PEOPLEMINE = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID,"peoplemine5"),
 			PolymerItemGroupUtils.builder().displayName(Text.of("PeopleMine"))
 					.icon(()->new ItemStack(Items.DIAMOND)).entries(((displayContext, entries) -> {
 						entries.add(PeopleMineSeason5.BLUE_PRINT);
+						entries.add(PeopleMineSeason5.TREMBLING_CRYSTAL);
 					})).build());
 
 
 
 	@Override
 	public void onInitialize() {
-
 		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
+		PolymerResourcePackUtils.addModAssets("minecraft");
 
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");

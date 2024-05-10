@@ -39,6 +39,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	modImplementation include("xyz.nucleoid:server-translations-api:2.3.0+1.20.5-rc2")
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-blocks:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
