@@ -44,6 +44,8 @@ dependencies {
 	modImplementation include("eu.pb4:polymer-blocks:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-networking:${project.polymer_version}")
+	modImplementation include("eu.pb4:sgui:1.5.1+1.20.5")
+
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"

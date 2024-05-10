@@ -2,6 +2,7 @@ package com.example;
 
 
 import com.example.items.BluePrint;
+import com.example.items.ItemsInit;
 import com.example.items.TremblingCrystal;
 import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
@@ -9,6 +10,7 @@ import com.sun.jna.Structure;
 import eu.pb4.polymer.core.api.item.PolymerItemComponent;
 import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.sgui.api.gui.SimpleGui;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -55,14 +57,6 @@ public class PeopleMineSeason5 implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 //trembling_crystal
-	public static final Item BLUE_PRINT = Items.register(Identifier.of(MOD_ID, "blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
-	public static final Item TREMBLING_CRYSTAL = Items.register(Identifier.of(MOD_ID, "trembling_crystal"),new TremblingCrystal(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
-	public static final ItemGroup PEOPLEMINE = Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID,"peoplemine5"),
-			PolymerItemGroupUtils.builder().displayName(Text.of("PeopleMine"))
-					.icon(()->new ItemStack(Items.DIAMOND)).entries(((displayContext, entries) -> {
-						entries.add(PeopleMineSeason5.BLUE_PRINT);
-						entries.add(PeopleMineSeason5.TREMBLING_CRYSTAL);
-					})).build());
 
 
 
@@ -80,10 +74,14 @@ public class PeopleMineSeason5 implements ModInitializer {
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			for (ServerPlayerEntity player : players) {
 				// Perform actions for each player on each tick
-				if (player.getInventory().getMainHandStack().getItem() == PeopleMineSeason5.BLUE_PRINT)
+				if (player.getInventory().getMainHandStack().getItem() == ItemsInit.BLUE_PRINT)
 					spawnBox(player);
 			}
 		});
+
+
+
+		ItemsInit.init();
 
 	}
 
