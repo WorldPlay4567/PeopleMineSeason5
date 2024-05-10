@@ -13,14 +13,15 @@ import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -37,13 +38,22 @@ public class TremblingCrystal extends Item implements PolymerItem {
          BlockPos blockPos = context.getBlockPos();
          ServerWorld serverWorld = context.getWorld().getServer().getOverworld();
          serverWorld.spawnParticles(ParticleTypes.END_ROD, blockPos.getX() + 0.5, blockPos.getY()+ 0.5, blockPos.getZ()+ 0.5, 5, 0.1, 0.1,0.1,0.1);
+         serverWorld.playSound(null,blockPos.getX() + 0.5, blockPos.getY()+ 0.5, blockPos.getZ()+ 0.5, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.PLAYERS, 0.1f,1);
+         Iterable<ItemStack> itemStack = context.getPlayer().getHandItems();
+
+         context.getPlayer().getItemCooldownManager().set(itemStack.iterator().next().getItem(), 120);
+
+
 
             return TypedActionResult.success(context).getResult();
     }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.of("Это кристал излучает что-то"));
+
+        tooltip.add(1,Text.literal("Этот кристал что-то излучает...").formatted(Formatting.WHITE));
+        tooltip.add(2,Text.literal("*дрожит*").formatted(Formatting.BLUE));
+
         super.appendTooltip(stack, context, tooltip, type);
     }
 
