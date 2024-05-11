@@ -1,55 +1,17 @@
 package com.example;
 
 
-import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
-import com.example.items.TremblingCrystal;
-import com.mojang.authlib.GameProfile;
-import com.mojang.logging.LogUtils;
-import com.sun.jna.Structure;
-import eu.pb4.polymer.core.api.item.PolymerItemComponent;
-import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
-import eu.pb4.sgui.api.gui.SimpleGui;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.block.StructureBlock;
-import net.minecraft.datafixer.fix.StructureFeatureChildrenPoolElementFix;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.structure.*;
-import net.minecraft.structure.processor.StructureProcessorList;
-import net.minecraft.text.Text;
-import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureSpawns;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.minecraft.text.Text;
-import javax.xml.transform.Source;
-import java.awt.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import static net.fabricmc.loader.impl.FabricLoaderImpl.MOD_ID;
 
 public class PeopleMineSeason5 implements ModInitializer {
 
@@ -78,7 +40,6 @@ public class PeopleMineSeason5 implements ModInitializer {
 					spawnBox(player);
 			}
 		});
-
 
 
 		ItemsInit.init();
