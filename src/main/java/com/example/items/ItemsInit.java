@@ -1,6 +1,8 @@
 package com.example.items;
 
 import com.example.PeopleMineSeason5;
+import com.example.blocks.CustomBlockList;
+
 import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

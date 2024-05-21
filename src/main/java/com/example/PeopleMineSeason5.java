@@ -1,6 +1,7 @@
 package com.example;
 
 
+import com.example.blocks.CustomBlockList;
 import com.example.items.ItemsInit;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
@@ -41,7 +42,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 			}
 		});
 
-
+		CustomBlockList.init();
 		ItemsInit.init();
 
 	}

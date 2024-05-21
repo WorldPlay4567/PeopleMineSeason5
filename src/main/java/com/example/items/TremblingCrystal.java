@@ -45,7 +45,7 @@ public class TremblingCrystal extends Item implements PolymerItem {
          context.getPlayer().getItemCooldownManager().set(itemStack.iterator().next().getItem(), 120);
          ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) context.getPlayer();
 
-         PMGui.open(serverPlayerEntity);
+
 
 
             return TypedActionResult.success(context).getResult();
