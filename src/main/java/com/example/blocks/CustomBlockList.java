@@ -42,8 +42,8 @@ public class CustomBlockList {
     public static void init() {
 
         CUSTOM_BLOCK_ENTITY =
-                Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(PeopleMineSeason5.MOD_ID, "library"),
-                        FabricBlockEntityTypeBuilder.create((pos, state) -> new CustomBlockEntity(BlockEntityType.DISPENSER,pos, state),
+                Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(PeopleMineSeason5.MOD_ID, "block/custom_block_test"),
+                        FabricBlockEntityTypeBuilder.create((pos, state) -> new CustomBlockEntity(CUSTOM_BLOCK_ENTITY,pos, state),
                                 CUSTOM_BLOCK).build(null));
 
         PolymerBlockUtils.registerBlockEntity(CUSTOM_BLOCK_ENTITY);

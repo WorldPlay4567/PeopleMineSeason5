@@ -17,6 +17,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -25,6 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.block.entity.SculkSpreadManager.MAX_CHARGE;
 
 
 public class CustomBlockTest extends BlockWithEntity implements PolymerTexturedBlock,BlockEntityProvider, BlockWithElementHolder, PolymerBlock, PolymerClientDecoded {
@@ -73,11 +76,20 @@ public class CustomBlockTest extends BlockWithEntity implements PolymerTexturedB
     @Override
     public BlockState getPolymerBlockState(BlockState state) {
         return this.polymerBlockState;
-
     }
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        System.out.println("randomDisplayTick");
+            spawnRandomParticle(random, world, pos);
+            spawnRandomParticle(random, world, pos);
+            spawnRandomParticle(random, world, pos);
+    }
+
+    private void spawnRandomParticle(Random random, World world, BlockPos pos) {
+
+        double offsetX = random.nextTriangular(0.5, 0.25);
+        double offsetZ = random.nextTriangular(0.5, 0.25);
+
+        world.addParticle(ParticleTypes.SOUL, pos.getX()+offsetX, pos.getY()+0.75, pos.getZ()+offsetZ, 0, 0.2*random.nextDouble(), 0);
     }
 
     @Nullable
