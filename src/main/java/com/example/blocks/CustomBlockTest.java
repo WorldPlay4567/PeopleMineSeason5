@@ -106,7 +106,7 @@ public class CustomBlockTest extends BlockWithEntity implements PolymerTexturedB
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient() ? null : validateTicker(type, CustomBlockList.CUSTOM_BLOCK_ENTITY, ((world1, pos1, state1, blockEntity1) -> CustomBlockEntity.tick(world1, pos1, state1)));
+        return world.isClient() ? null : validateTicker(type, CustomBlockList.CUSTOM_BLOCK_ENTITY, (CustomBlockEntity::tick));
     }
 
 
