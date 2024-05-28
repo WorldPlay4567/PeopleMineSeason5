@@ -26,6 +26,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -50,8 +51,15 @@ public class BluePrint extends Item implements PolymerItem {
             if (!world.isClient) {
 
                 if (playerEntity.getWorld() instanceof ServerWorld serverWorld) {
-                    Identifier bastionId = new Identifier("peoplemineseason5", "test");
-                    BlockPos pos = playerEntity.getBlockPos();
+                    Identifier bastionId = new Identifier("peoplemineseason5", "shop");
+
+
+                    float x = playerEntity.getBlockPos().getX();
+                    float y = playerEntity.getBlockPos().getY() - 1;
+                    float z = playerEntity.getBlockPos().getZ();
+
+                    BlockPos pos = BlockPos.ofFloored(new Vec3d(x,y,z));
+
                     StructureTemplate structureTemplate = serverWorld.getStructureTemplateManager().getTemplateOrBlank(bastionId);
                     structureTemplate.place(serverWorld, pos, pos, new StructurePlacementData(), Random.create(), 2);
                     playerEntity.sendMessage(Text.literal(playerEntity.getName() + " использовал палку!"), false);

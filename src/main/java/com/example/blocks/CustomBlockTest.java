@@ -48,7 +48,12 @@ public class CustomBlockTest extends BlockWithEntity implements PolymerTexturedB
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        PMGui.open((ServerPlayerEntity) player);
+        if (world.getBlockEntity(pos) instanceof CustomBlockEntity be) {
+            be.createGui((ServerPlayerEntity) player);
+        }
+
+
+
         return ActionResult.success(true);
     }
 
@@ -77,20 +82,7 @@ public class CustomBlockTest extends BlockWithEntity implements PolymerTexturedB
     public BlockState getPolymerBlockState(BlockState state) {
         return this.polymerBlockState;
     }
-    @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-            spawnRandomParticle(random, world, pos);
-            spawnRandomParticle(random, world, pos);
-            spawnRandomParticle(random, world, pos);
-    }
 
-    private void spawnRandomParticle(Random random, World world, BlockPos pos) {
-
-        double offsetX = random.nextTriangular(0.5, 0.25);
-        double offsetZ = random.nextTriangular(0.5, 0.25);
-
-        world.addParticle(ParticleTypes.SOUL, pos.getX()+offsetX, pos.getY()+0.75, pos.getZ()+offsetZ, 0, 0.2*random.nextDouble(), 0);
-    }
 
     @Nullable
     @Override

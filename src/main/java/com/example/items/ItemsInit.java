@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class ItemsInit {
-    public static final Item BLUE_PRINT = Items.register(Identifier.of(PeopleMineSeason5.MOD_ID, "blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
+    public static final Item BLUE_PRINT = Items.register(Identifier.of(PeopleMineSeason5.MOD_ID, "blue_print"),new BluePrint(new Item.Settings().fireproof().rarity(Rarity.EPIC).maxCount(64)));
     public static final Item TREMBLING_CRYSTAL = Items.register(Identifier.of(PeopleMineSeason5.MOD_ID, "trembling_crystal"),new TremblingCrystal(new Item.Settings().fireproof().rarity(Rarity.EPIC)));
 
     public static final ItemGroup PEOPLEMINE = Registry.register(Registries.ITEM_GROUP, new Identifier(PeopleMineSeason5.MOD_ID,"peoplemine5"),
