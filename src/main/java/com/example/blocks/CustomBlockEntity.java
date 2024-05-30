@@ -97,30 +97,6 @@ public class CustomBlockEntity extends BlockEntity implements MinimalSidedInvent
             this.setSlotRedirect(0, new Slot(CustomBlockEntity.this,0 ,0,0) );
             this.setSlotRedirect(1, new Slot(CustomBlockEntity.this,1 ,1,0) );
             this.setSlotRedirect(2, new Slot(CustomBlockEntity.this,2 ,2,0) );
-            this.setSlotRedirect(3, new Slot(CustomBlockEntity.this,3 ,3,0) );
-            this.setSlotRedirect(4, new Slot(CustomBlockEntity.this,4 ,4,0) );
-            this.setSlotRedirect(5, new Slot(CustomBlockEntity.this,5 ,5,0) );
-            this.setSlotRedirect(6, new Slot(CustomBlockEntity.this,6 ,6,0) );
-            this.setSlotRedirect(7, new Slot(CustomBlockEntity.this,7 ,7,0) );
-            this.setSlotRedirect(8, new Slot(CustomBlockEntity.this,8 ,8,0) );
-            this.setSlotRedirect(9, new Slot(CustomBlockEntity.this,9 ,9,0) );
-            this.setSlotRedirect(10, new Slot(CustomBlockEntity.this,10 ,10,0) );
-            this.setSlotRedirect(11, new Slot(CustomBlockEntity.this,11 ,11,0) );
-            this.setSlotRedirect(12, new Slot(CustomBlockEntity.this,12 ,12,0) );
-            this.setSlotRedirect(13, new Slot(CustomBlockEntity.this,13 ,13,0) );
-            this.setSlotRedirect(14, new Slot(CustomBlockEntity.this,14 ,14,0) );
-            this.setSlotRedirect(15, new Slot(CustomBlockEntity.this,15 ,15,0) );
-            this.setSlotRedirect(16, new Slot(CustomBlockEntity.this,16 ,16,0) );
-            this.setSlotRedirect(17, new Slot(CustomBlockEntity.this,17 ,17,0) );
-            this.setSlotRedirect(18, new Slot(CustomBlockEntity.this,18 ,18,0) );
-            this.setSlotRedirect(19, new Slot(CustomBlockEntity.this,19 ,19,0) );
-            this.setSlotRedirect(20, new Slot(CustomBlockEntity.this,20 ,20,0) );
-            this.setSlotRedirect(21, new Slot(CustomBlockEntity.this,21 ,21,0) );
-            this.setSlotRedirect(22, new Slot(CustomBlockEntity.this,22 ,22,0) );
-            this.setSlotRedirect(23, new Slot(CustomBlockEntity.this,23 ,23,0) );
-            this.setSlotRedirect(24, new Slot(CustomBlockEntity.this,24 ,24,0) );
-
-
 
 
             this.open();
