@@ -15,6 +15,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
+import static com.example.blocks.BlockInit.CUSTOM_BLOCK;
 import static net.minecraft.registry.Registries.BLOCK;
 
 public class CustomBlockList {
@@ -23,20 +24,12 @@ public class CustomBlockList {
 
 
     public static BlockEntityType<CustomBlockEntity> CUSTOM_BLOCK_ENTITY;
-    public static final Block CUSTOM_BLOCK = register(BlockModelType.TRANSPARENT_BLOCK, "block/custom_block_test");
 
 
 
 
-    public static Block register(BlockModelType type, String modelId) {
-        var id = new Identifier("peoplemineseason5", modelId);
-        var block = Registry.register(BLOCK, id,
-                new CustomBlockTest(FabricBlockSettings.copy(Blocks.DIAMOND_BLOCK), type, modelId));
 
 
-        Registry.register(Registries.ITEM, id, new CustomBlockItem(new Item.Settings(), block, modelId));
-        return block;
-    }
 
 
     public static void init() {

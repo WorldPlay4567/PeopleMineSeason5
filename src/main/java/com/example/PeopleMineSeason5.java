@@ -1,6 +1,7 @@
 package com.example;
 
 
+import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
 import com.example.items.ItemsInit;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -32,6 +33,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
 
+
 		ServerTickEvents.START_SERVER_TICK.register((server)->{
 
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
@@ -44,7 +46,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 		CustomBlockList.init();
 		ItemsInit.init();
-
+		BlockInit.init();
 	}
 
 
