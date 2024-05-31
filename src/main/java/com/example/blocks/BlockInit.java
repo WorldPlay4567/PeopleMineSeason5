@@ -8,6 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 
@@ -17,7 +18,8 @@ public class BlockInit {
 
     public static final Block CUSTOM_BLOCK = registerOld(BlockModelType.TRANSPARENT_BLOCK, "custom_block_test");
 
-    public static final Block VOID_END = register("void_end" , new DefaultBlock(FabricBlockSettings.copy(Blocks.DIAMOND_BLOCK), BlockModelType.TRANSPARENT_BLOCK,"void_end"));
+    public static final Block VOID_END = register("void_end" , new DefaultBlock(FabricBlockSettings.copy(Blocks.DIAMOND_BLOCK).luminance((state) -> {
+        return 15;}), BlockModelType.TRANSPARENT_BLOCK,"void_end"));
     public static final Block VOID_FIRE = register("void_fire" , new DefaultBlock(FabricBlockSettings.copy(Blocks.DIAMOND_BLOCK), BlockModelType.TRANSPARENT_BLOCK,"void_fire"));
 
     public static Block registerOld(BlockModelType type, String modelId) {

@@ -62,7 +62,7 @@ public class CustomBlockEntity extends BlockEntity implements MinimalSidedInvent
         self.time ++;
         self.markDirty();
 
-        ServerWorld serverWorld = world.getServer().getOverworld();
+        ServerWorld serverWorld = (ServerWorld) world;
         serverWorld.spawnParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY()+ 2, pos.getZ()+ 0.5, 5, 0, 0.1,0,0.01);
     }
 
