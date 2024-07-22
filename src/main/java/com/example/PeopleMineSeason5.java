@@ -3,26 +3,40 @@ package com.example;
 
 import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
+import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.packet.s2c.play.EntityS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOfferList;
+import net.minecraft.village.TradedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Random;
+
+import static com.example.items.BluePrint.generateParticleSquare;
 
 public class PeopleMineSeason5 implements ModInitializer {
 
 	public static final  String MOD_ID = "peoplemineseason5";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-//trembling_crystal
-
-
 
 	@Override
 	public void onInitialize() {
@@ -34,62 +48,30 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("=====================");
 
 
-		ServerTickEvents.START_SERVER_TICK.register((server)->{
+		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			for (ServerPlayerEntity player : players) {
-				// Perform actions for each player on each tick
-				if (player.getInventory().getMainHandStack().getItem() == ItemsInit.BLUE_PRINT)
-					spawnBox(player);
+				BluePrint.tick(player);
 			}
 		});
 
 		CustomBlockList.init();
 		ItemsInit.init();
 		BlockInit.init();
+
 	}
+}
 
 
 
 
-	public static void spawnBox(ServerPlayerEntity player) {
-		generateParticleSquare(player.getServerWorld(),player.getPos().x,player.getPos().y,player.getPos().z,10);
-	}
+
+
+
 
 //world.spawnParticles(ParticleTypes.END_ROD, x + (double) i - 10, y, z, 1, 0, 0,0,0);
-	public static void generateParticleSquare(ServerWorld world, double pos_x, double pos_y, double pos_z, int size) {
 
-		BlockPos corner1 = new BlockPos((int) pos_x, (int) pos_y, (int) pos_z);
-		BlockPos corner2 = new BlockPos(corner1.getX() + size, corner1.getY() + size, corner1.getZ() + size);
-
-		// Генерация партиклов на рёбрах кубоида
-		for (int x = corner1.getX(); x <= corner2.getX(); x++) {
-			for (int y = corner1.getY(); y <= corner2.getY(); y += (corner2.getY() - corner1.getY())) {
-				for (int z = corner1.getZ(); z <= corner2.getZ(); z += (corner2.getZ() - corner1.getZ())) {
-					Vec3d pos = new Vec3d(x, y, z);
-					world.spawnParticles(ParticleTypes.ELECTRIC_SPARK, pos.x, pos.y, pos.z, 0, 0, 0,0,0);
-				}
-			}
-		}
-
-		for (int y = corner1.getY(); y <= corner2.getY(); y++) {
-			for (int x = corner1.getX(); x <= corner2.getX(); x += (corner2.getX() - corner1.getX())) {
-				for (int z = corner1.getZ(); z <= corner2.getZ(); z += (corner2.getZ() - corner1.getZ())) {
-					Vec3d pos = new Vec3d(x, y, z);
-					world.spawnParticles(ParticleTypes.ELECTRIC_SPARK, pos.x, pos.y, pos.z, 0, 0, 0,0,0);
-				}
-			}
-		}
-
-		for (int z = corner1.getZ(); z <= corner2.getZ(); z++) {
-			for (int x = corner1.getX(); x <= corner2.getX(); x += (corner2.getX() - corner1.getX())) {
-				for (int y = corner1.getY(); y <= corner2.getY(); y += (corner2.getY() - corner1.getY())) {
-					Vec3d pos = new Vec3d(x, y, z);
-					world.spawnParticles(ParticleTypes.ELECTRIC_SPARK, pos.x, pos.y, pos.z, 0, 0, 0,0,0);
-				}
-			}
-		}
-	}
 
 
 
@@ -119,4 +101,4 @@ public class PeopleMineSeason5 implements ModInitializer {
 //			return ActionResult.PASS;
 //		});
 
-}
+

@@ -12,6 +12,13 @@ base {
 
 repositories {
 	maven {url = "https://maven.nucleoid.xyz/"}
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
+		}
+	}
 
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -46,6 +53,9 @@ dependencies {
 	modImplementation include("eu.pb4:polymer-networking:${project.polymer_version}")
 	modImplementation include("eu.pb4:sgui:1.5.1+1.20.5")
 	modImplementation include("eu.pb4:polymer-virtual-entity:0.8.0-pre.1+1.20.6")
+	modImplementation include("eu.pb4:factorytools:0.2.2+1.20.6")
+	modImplementation include("maven.modrinth:structureplacerapi:1.1.0")
+
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
