@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-import static com.example.items.BluePrint.generateParticleSquare;
 
 public class PeopleMineSeason5 implements ModInitializer {
 
