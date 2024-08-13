@@ -5,20 +5,36 @@ import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
+import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.sgui.api.elements.GuiElementBuilder;
+import eu.pb4.sgui.api.gui.MerchantGui;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.s2c.play.EntityS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -30,6 +46,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Random;
+
+import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 
 public class PeopleMineSeason5 implements ModInitializer {
@@ -47,6 +65,25 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("=====================");
 
 
+//		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+//			if (hitResult == null) {
+//				return ActionResult.PASS;
+//			}
+//
+//            if (hitResult.getEntity() instanceof VillagerEntity) {
+//				PeopleMineSeason5.test7((ServerPlayerEntity) player);
+//				return ActionResult.FAIL;
+//			}
+//
+//			return ActionResult.PASS;
+//		});
+
+
+//		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+//			dispatcher.register(CommandManager.literal("test7")
+//					.executes(PeopleMineSeason5::test7));});
+
+
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
@@ -60,11 +97,9 @@ public class PeopleMineSeason5 implements ModInitializer {
 		BlockInit.init();
 
 	}
+
+
 }
-
-
-
-
 
 
 
