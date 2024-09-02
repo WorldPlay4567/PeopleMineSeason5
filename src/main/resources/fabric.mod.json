@@ -17,9 +17,6 @@
 	"entrypoints": {
 		"main": [
 			"com.example.PeopleMineSeason5"
-		],
-		"client": [
-			"com.example.PeopleMineSeason5Client"
 		]
 	},
 	"mixins": [

@@ -21,10 +21,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(VillagerEntity.class)
 public class VillagerMixin {
+
+
+
+
+
 	@Inject(at = @At("HEAD"), method = "interactMob", cancellable = true)
 	public void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-		test7((ServerPlayerEntity) player);
-		cir.setReturnValue(ActionResult.FAIL);
+
+		VillagerEntity villager = (VillagerEntity) (Object) this;
+
+		if (villager.hasCustomName() && "Каменьщик".equals(villager.getCustomName().getString())) {
+			test7((ServerPlayerEntity) player);
+			cir.setReturnValue(ActionResult.FAIL);
+		}
 		// This code is injected into the start of MinecraftServer.loadWorld()V
 	}
 
@@ -48,22 +58,27 @@ public class VillagerMixin {
 						this.sendUpdate();
 					}
 				}
+				@Override
+				public void setExperience(int experience) {
+
+				}
+
 			};
 
-			gui.setTitle(Text.literal("Trades wow!"));
+			gui.setTitle(Text.literal("Продавец камня"));
 			gui.setIsLeveled(true);
+
+
 			gui.addTrade(new TradeOffer(
-					new TradedItem(Items.STONE),
-					new GuiElementBuilder(Items.DIAMOND_AXE)
+					new TradedItem(Items.EMERALD, 1),
+					new GuiElementBuilder(Items.ANDESITE)
 							.glow()
-							.setCount(1)
-							.setName(Text.literal("Glowing Axe"))
+							.setCount(16)
 							.asStack(),
 					1,
-					0,
+					1,
 					1
 			));
-			gui.open();
 
 			gui.addTrade(new TradeOffer(
 					new TradedItem(Items.EMERALD),
@@ -71,9 +86,33 @@ public class VillagerMixin {
 							.setCount(16)
 							.asStack(),
 					100,
-					0,
+					1,
 					1
 			));
+
+			gui.addTrade(new TradeOffer(
+					new TradedItem(Items.EMERALD),
+					new GuiElementBuilder(Items.DIORITE)
+							.setCount(16)
+							.asStack(),
+					100,
+					1,
+					1
+			));
+
+			gui.addTrade(new TradeOffer(
+					new TradedItem(Items.EMERALD),
+					new GuiElementBuilder(Items.GRANITE)
+							.setCount(16)
+							.asStack(),
+					100,
+					1,
+					1
+			));
+
+			gui.open();
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

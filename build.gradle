@@ -20,6 +20,7 @@ repositories {
 		}
 	}
 
+
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -45,6 +46,7 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
 
 	modImplementation include("xyz.nucleoid:server-translations-api:2.3.0+1.20.5-rc2")
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
