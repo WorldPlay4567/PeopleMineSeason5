@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "peoplemineseason5:item/tex_1",
-		"1": "peoplemineseason5:item/tex_2",
+		"1": "peoplemineseason5:item/dast_animation",
 		"particle": "peoplemineseason5:item/tex_1"
 	},
 	"elements": [
@@ -177,38 +177,32 @@
 			}
 		},
 		{
-			"name": "Right Arm",
-			"from": [5.97334, 2.37275, -6.48387],
-			"to": [8.73334, 5.13275, 1.79613],
-			"rotation": {"angle": -45, "axis": "y", "origin": [1.71137, 1.55, 4.43415]},
+			"from": [8, 6, 8.75],
+			"to": [8.1, 11, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 6, 9]},
 			"faces": {
-				"north": {"uv": [12, 5, 11, 4], "rotation": 180, "texture": "#1"},
-				"east": {"uv": [10, 5, 11, 8], "rotation": 90, "texture": "#1"},
-				"south": {"uv": [13, 4, 12, 5], "texture": "#1"},
-				"west": {"uv": [12, 5, 13, 8], "rotation": 270, "texture": "#1"},
-				"up": {"uv": [13, 5, 14, 8], "texture": "#1"},
-				"down": {"uv": [11, 5, 12, 8], "rotation": 180, "texture": "#1"}
-			}
-		},
-		{
-			"name": "Right Arm Layer",
-			"from": [5.80084, 2.20025, -6.60585],
-			"to": [8.90584, 5.30525, 2.01915],
-			"rotation": {"angle": -45, "axis": "y", "origin": [1.71137, 1.55, 4.43415]},
-			"faces": {
-				"north": {"uv": [12, 9, 11, 8], "rotation": 180, "texture": "#1"},
-				"east": {"uv": [10, 9, 11, 12], "rotation": 90, "texture": "#1"},
-				"south": {"uv": [13, 8, 12, 9], "texture": "#1"},
-				"west": {"uv": [12, 9, 13, 12], "rotation": 270, "texture": "#1"},
-				"up": {"uv": [13, 9, 14, 12], "texture": "#1"},
-				"down": {"uv": [11, 9, 12, 12], "rotation": 180, "texture": "#1"}
+				"north": {"uv": [0, 0, 0.025, 1.25], "texture": "#1"},
+				"east": {"uv": [3.73333, 1.6, 10.4125, 10.66667], "texture": "#1"},
+				"south": {"uv": [0, 0, 0.025, 1.25], "texture": "#1"},
+				"west": {"uv": [0, 0, 0.8125, 1.25], "texture": "#1"},
+				"up": {"uv": [0, 0, 0.025, 0.8125], "texture": "#1"},
+				"down": {"uv": [0, 0, 0.025, 0.8125], "texture": "#1"}
 			}
 		}
 	],
 	"display": {
+		"thirdperson_righthand": {
+			"rotation": [38, 180, 0],
+			"translation": [0, 2, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
 		"firstperson_righthand": {
-			"rotation": [0, -109, 0],
-			"translation": [-6.5, 8.5, 0.5]
+			"rotation": [0, -154, 0],
+			"translation": [2.5, 7.25, 0.5]
 		}
 	},
 	"groups": [
@@ -216,19 +210,14 @@
 			"name": "group",
 			"origin": [9.99137, 5, 4.43415],
 			"color": 0,
+			"nbt": "{}",
 			"children": [
 				{
 					"name": "group",
 					"origin": [9.99137, 5, 4.43415],
 					"color": 0,
-					"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-				},
-				{
-					"name": "Right Arm",
-					"origin": [2.99137, 22, 4.43415],
-					"rotation": [10, 0, 0],
-					"color": 0,
-					"children": [13, 14]
+					"nbt": "{}",
+					"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 				}
 			]
 		}

@@ -83,7 +83,8 @@ public class BluePrint extends Item implements PolymerItem {
 
                     BlockPos pos = BlockPos.ofFloored(new Vec3d(x,y,z));
 
-                    StructurePlacerAPI structurePlacerAPI = new StructurePlacerAPI((ServerWorld) playerEntity.getWorld(), identifier , pos);
+                    StructurePlacerAPI structurePlacerAPI = new StructurePlacerAPI((ServerWorld) playerEntity.getWorld(), identifier , pos, BlockMirror.NONE,BlockRotation.NONE,false,1,new BlockPos(0, 0, 0));
+
                     structurePlacerAPI.loadStructure();
 
                     serverWorld.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, SoundCategory.PLAYERS, 1,1);

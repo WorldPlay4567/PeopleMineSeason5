@@ -31,7 +31,7 @@ public class VillagerMixin {
 
 		VillagerEntity villager = (VillagerEntity) (Object) this;
 
-		if (villager.hasCustomName() && "Каменьщик".equals(villager.getCustomName().getString())) {
+		if (villager.hasCustomName() && "Каменщик".equals(villager.getCustomName().getString())) {
 			test7((ServerPlayerEntity) player);
 			cir.setReturnValue(ActionResult.FAIL);
 		}
