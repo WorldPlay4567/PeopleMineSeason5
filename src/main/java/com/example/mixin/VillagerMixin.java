@@ -1,16 +1,19 @@
 package com.example.mixin;
 
+import com.example.utility.ConfigVillager;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +21,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.io.ObjectInputFilter;
 
 @Mixin(VillagerEntity.class)
 public class VillagerMixin {
@@ -70,42 +75,12 @@ public class VillagerMixin {
 
 
 			gui.addTrade(new TradeOffer(
-					new TradedItem(Items.EMERALD, 1),
+					new TradedItem(ConfigVillager.getItem("stone"), 1),
 					new GuiElementBuilder(Items.ANDESITE)
 							.glow()
 							.setCount(16)
 							.asStack(),
 					1,
-					1,
-					1
-			));
-
-			gui.addTrade(new TradeOffer(
-					new TradedItem(Items.EMERALD),
-					new GuiElementBuilder(Items.STONE)
-							.setCount(16)
-							.asStack(),
-					100,
-					1,
-					1
-			));
-
-			gui.addTrade(new TradeOffer(
-					new TradedItem(Items.EMERALD),
-					new GuiElementBuilder(Items.DIORITE)
-							.setCount(16)
-							.asStack(),
-					100,
-					1,
-					1
-			));
-
-			gui.addTrade(new TradeOffer(
-					new TradedItem(Items.EMERALD),
-					new GuiElementBuilder(Items.GRANITE)
-							.setCount(16)
-							.asStack(),
-					100,
 					1,
 					1
 			));

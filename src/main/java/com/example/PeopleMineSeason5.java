@@ -5,9 +5,11 @@ import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
+import com.example.utility.ConfigVillager;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.Items;
@@ -23,11 +25,18 @@ import java.util.Map;
 import java.util.UUID;
 
 
+
+
 public class PeopleMineSeason5 implements ModInitializer {
 
 	public static final  String MOD_ID = "peoplemineseason5";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private final Map<UUID, ArmorStandEntity> playerArmorStands = new HashMap<>();
+
+
+
+
+
 	@Override
 	public void onInitialize() {
 		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
@@ -36,6 +45,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
+
+		ConfigVillager.loadOrCreateConfig();
 
 
 //		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
@@ -50,7 +61,9 @@ public class PeopleMineSeason5 implements ModInitializer {
 //
 //			return ActionResult.PASS;
 //		});
-
+//		ServerWorldEvents.LOAD.register((test,test2)-> {
+//			ConfigVillager.getItem("stone");
+//		} );
 
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("test7")
@@ -142,6 +155,9 @@ public class PeopleMineSeason5 implements ModInitializer {
 		// Возвращаем позицию правого плеча игрока
 		return new Vec3d(playerPos.x + offsetX, shoulderHeight, playerPos.z + offsetZ);
 	}
+
+
+
 }
 
 
