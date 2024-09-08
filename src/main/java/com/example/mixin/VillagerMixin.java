@@ -74,16 +74,18 @@ public class VillagerMixin {
 			gui.setIsLeveled(true);
 
 
-			gui.addTrade(new TradeOffer(
-					new TradedItem(ConfigVillager.getItem("stone"), 1),
-					new GuiElementBuilder(Items.ANDESITE)
-							.glow()
-							.setCount(16)
-							.asStack(),
-					1,
-					1,
-					1
-			));
+//			gui.addTrade(new TradeOffer(
+//					new TradedItem(ConfigVillager.getItem("stone"), 1),
+//					new GuiElementBuilder(Items.ANDESITE)
+//							.glow()
+//							.setCount(16)
+//							.asStack(),
+//					1,
+//					1,
+//					1
+//			));
+
+			ConfigVillager.getTrader("stone", gui);
 
 			gui.open();
 

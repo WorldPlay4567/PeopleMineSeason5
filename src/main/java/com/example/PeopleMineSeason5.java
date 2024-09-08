@@ -6,15 +6,20 @@ import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
 import com.example.utility.ConfigVillager;
+import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
@@ -23,8 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-
+import java.util.function.Supplier;
 
 
 public class PeopleMineSeason5 implements ModInitializer {
@@ -48,6 +52,10 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 		ConfigVillager.loadOrCreateConfig();
 
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			dispatcher.register(CommandManager.literal("peopleminereload")
+					.executes(PeopleMineSeason5::reload));
+		});
 
 //		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 //			if (hitResult == null) {
@@ -137,6 +145,13 @@ public class PeopleMineSeason5 implements ModInitializer {
 		BlockInit.init();
 
 	}
+
+	private static int reload(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
+		ConfigVillager.loadConfig();
+		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
+        return 1;
+    }
+
 	private Vec3d getPlayerShoulderPosition(ServerPlayerEntity player) {
 		// Базовая позиция игрока
 		Vec3d playerPos = player.getPos();

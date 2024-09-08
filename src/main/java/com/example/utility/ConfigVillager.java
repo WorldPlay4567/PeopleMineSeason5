@@ -11,11 +11,18 @@ import java.util.Optional;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.brigadier.context.CommandContext;
+import eu.pb4.sgui.api.elements.GuiElementBuilder;
+import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradedItem;
 
 public class ConfigVillager {
 
@@ -38,7 +45,7 @@ public class ConfigVillager {
     }
 
     // Метод для загрузки конфигурации
-    private static void loadConfig() {
+    public static void loadConfig() {
         try (FileReader reader = new FileReader(CONFIG_PATH)) {
             // Парсим JSON и сохраняем его в переменную config
             config = JsonParser.parseReader(reader).getAsJsonObject();
@@ -70,25 +77,43 @@ public class ConfigVillager {
         }
     }
 
-    public static Item getItem(String villager) {
-
+    public static Item getItem(String id) {
         for (Item item :  Registries.ITEM) {
-
-           String id = String.valueOf(config.get(villager).getAsJsonObject().get("item").getAsString());
-
-            System.out.println(item);
-            System.out.println(id);
             if(Objects.equals(id, item.asItem().toString())) {
-
                 return item;
             }
-
         }
         return null;
     }
 
 
+    public static void getTrader(String villager, MerchantGui gui) {
 
+        JsonArray jsonArray = config.getAsJsonArray(villager);
+        for(JsonElement jsonElement : jsonArray) {
+            JsonObject trade = jsonElement.getAsJsonObject();
+
+            String buy = trade.get("buy").getAsString();
+            int count = trade.get("count").getAsInt();
+
+            String buy2 = trade.get("buy2").getAsString();
+            int count2 = trade.get("count2").getAsInt();
+
+            String out = trade.get("out").getAsString();
+            int outCount = trade.get("out_count").getAsInt();
+
+            gui.addTrade(new TradeOffer(
+                    new TradedItem(Objects.requireNonNull(ConfigVillager.getItem(buy)), count),
+                     Optional.of(new TradedItem(Objects.requireNonNull(ConfigVillager.getItem(buy2)), count2)),
+                    new GuiElementBuilder(Objects.requireNonNull(ConfigVillager.getItem(out)))
+                            .setCount(outCount)
+                            .asStack(),
+                    1,
+                    1,
+                    1
+            ));
+        }
+    }
 
 //    // Метод для получения значений конфигурации
 //    public static String getSetting1() {
@@ -119,4 +144,6 @@ public class ConfigVillager {
             System.out.println("Ошибка при сохранении конфигурации.");
         }
     }
+
+
 }
