@@ -8,23 +8,32 @@ import com.example.items.ItemsInit;
 import com.example.utility.ConfigVillager;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.sgui.api.gui.MerchantGui;
+import eu.pb4.sgui.api.gui.SimpleGui;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.village.TradeOffer;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -56,6 +65,16 @@ public class PeopleMineSeason5 implements ModInitializer {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));
 		});
+
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+			dispatcher.register(CommandManager.literal("gui")
+					.executes(PeopleMineSeason5::gui));
+		});
+
+
+
+
+
 
 //		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 //			if (hitResult == null) {
@@ -171,7 +190,32 @@ public class PeopleMineSeason5 implements ModInitializer {
 		return new Vec3d(playerPos.x + offsetX, shoulderHeight, playerPos.z + offsetZ);
 	}
 
+	private static int gui(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
+		ServerPlayerEntity player =  serverCommandSourceCommandContext.getSource().getPlayer();
+		SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6,player,false);
 
+		Text message = Text.literal("")
+				.append(Text.translatable("space.-11")
+						.append(Text.literal("\u0006").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
+		gui.setTitle(message);
+
+
+
+
+//			gui.addTrade(new TradeOffer(
+//					new TradedItem(ConfigVillager.getItem("stone"), 1),
+//					new GuiElementBuilder(Items.ANDESITE)
+//							.glow()
+//							.setCount(16)
+//							.asStack(),
+//					1,
+//					1,
+//					1
+//			));
+
+		gui.open();
+        return 1;
+    }
 
 }
 

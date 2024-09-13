@@ -1,0 +1,41 @@
+{
+	"providers": [
+		{
+			"type": "bitmap",
+			"file": "warning.png",
+			"ascent": 12,
+			"height": 16,
+			"chars": ["\u0002"]
+		},
+		{
+			"type": "bitmap",
+			"file": "font/1chapter.png",
+			"ascent": 5,
+			"height": 16,
+			"chars": ["\u0003"]
+		},
+		{
+			"type": "bitmap",
+			"file": "font/black.png",
+			"ascent": 100,
+			"height": 256,
+			"chars": ["\u0004"]
+		}
+		,
+		{
+			"type": "bitmap",
+			"file": "font/button_f.png",
+			"ascent": 10,
+			"height": 15,
+			"chars": ["\u0005"]
+		}
+		,
+		{
+			"type": "bitmap",
+			"file": "font/gui.png",
+			"ascent": 15,
+			"height": 185,
+			"chars": ["\u0006"]
+		}
+	]
+}
