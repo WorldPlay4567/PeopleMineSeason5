@@ -66,10 +66,10 @@ public class PeopleMineSeason5 implements ModInitializer {
 					.executes(PeopleMineSeason5::reload));
 		});
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			dispatcher.register(CommandManager.literal("gui")
-					.executes(PeopleMineSeason5::gui));
-		});
+//		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+//			dispatcher.register(CommandManager.literal("gui")
+//					.executes(PeopleMineSeason5::gui));
+//		});
 
 
 
@@ -190,32 +190,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		return new Vec3d(playerPos.x + offsetX, shoulderHeight, playerPos.z + offsetZ);
 	}
 
-	private static int gui(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
-		ServerPlayerEntity player =  serverCommandSourceCommandContext.getSource().getPlayer();
-		SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6,player,false);
 
-		Text message = Text.literal("")
-				.append(Text.translatable("space.-11")
-						.append(Text.literal("\u0006").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
-		gui.setTitle(message);
-
-
-
-
-//			gui.addTrade(new TradeOffer(
-//					new TradedItem(ConfigVillager.getItem("stone"), 1),
-//					new GuiElementBuilder(Items.ANDESITE)
-//							.glow()
-//							.setCount(16)
-//							.asStack(),
-//					1,
-//					1,
-//					1
-//			));
-
-		gui.open();
-        return 1;
-    }
 
 }
 

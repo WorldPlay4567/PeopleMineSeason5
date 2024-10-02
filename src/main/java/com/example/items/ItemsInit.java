@@ -28,6 +28,7 @@ public class ItemsInit {
                     .icon(()->new ItemStack(Items.DIAMOND)).entries(((displayContext, entries) -> {
                         entries.add(ItemsInit.BLUE_PRINT);
                         entries.add(ItemsInit.TREMBLING_CRYSTAL);
+
                     })).build());
 
 
