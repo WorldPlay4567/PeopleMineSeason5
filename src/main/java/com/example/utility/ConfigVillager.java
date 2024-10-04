@@ -1,5 +1,6 @@
 package com.example.utility;
 
+import com.example.PeopleMineSeason5;
 import com.google.gson.*;
 
 import java.io.File;
@@ -29,11 +30,9 @@ public class ConfigVillager {
         File configFile = new File(CONFIG_PATH);
 
         if (configFile.exists()) {
-            // Если файл существует, загружаем его содержимое
             loadConfig();
         } else {
-            // Если файла нет, создаем его
-            createDefaultConfig();
+            PeopleMineSeason5.LOGGER.warn("Файл конфигураций не был найден!");
         }
     }
 
@@ -46,27 +45,6 @@ public class ConfigVillager {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Ошибка при загрузке конфигурации.");
-        }
-    }
-
-    // Метод для создания базовой конфигурации
-    private static void createDefaultConfig() {
-        // Создаем базовую конфигурацию в виде JSON объекта
-        config = new JsonObject();
-
-        JsonObject stone = new JsonObject();
-            stone.addProperty("item", "Items.DIAMOND");
-
-        config.add("stone", stone);
-
-
-        // Записываем эту конфигурацию в файл
-        try (FileWriter writer = new FileWriter(CONFIG_PATH)) {
-            gson.toJson(config, writer);
-            System.out.println("Конфигурация создана по умолчанию.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Ошибка при создании конфигурации.");
         }
     }
 
@@ -125,26 +103,6 @@ public class ConfigVillager {
         saveConfig();
         loadConfig();
     }
-//    // Метод для получения значений конфигурации
-//    public static String getSetting1() {
-//        return config.get("setting1").getAsString();
-//    }
-//
-//    public static int getSetting2() {
-//        return config.get("setting2").getAsInt();
-//    }
-//
-//    public static boolean getSetting3() {
-//        return config.get("setting3").getAsBoolean();
-//    }
-
-    // Метод для обновления значения в конфигурации
-    public static void updateConfig(String key, String value) {
-        config.addProperty(key, value);
-        saveConfig();
-    }
-
-    // Метод для сохранения обновленной конфигурации
     private static void saveConfig() {
         try (FileWriter writer = new FileWriter(CONFIG_PATH)) {
             gson.toJson(config, writer);

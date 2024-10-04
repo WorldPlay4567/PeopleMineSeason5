@@ -166,7 +166,6 @@ public class PeopleMineSeason5 implements ModInitializer {
 	}
 
 	private static int reload(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
-		ConfigVillager.loadConfig();
 		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
         return 1;
     }

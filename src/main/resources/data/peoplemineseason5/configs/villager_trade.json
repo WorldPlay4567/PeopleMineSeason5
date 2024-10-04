@@ -1,0 +1,20 @@
+{
+  "stone": [
+    {
+      "buy": "minecraft:emerald",
+      "count": 82,
+      "buy2": "air",
+      "count2": 2,
+      "out": "minecraft:diamond",
+      "out_count": 3
+    },
+    {
+      "buy": "minecraft:emerald",
+      "count": 6,
+      "buy2": "minecraft:stick",
+      "count2": 2,
+      "out": "minecraft:diamond",
+      "out_count": 3
+    }
+  ]
+}
