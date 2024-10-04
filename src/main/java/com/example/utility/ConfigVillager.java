@@ -11,16 +11,10 @@ import java.util.Optional;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.MerchantGui;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 
@@ -30,7 +24,6 @@ public class ConfigVillager {
     private static final String CONFIG_PATH = "config/villager_trade.json";
     private static JsonObject config;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
 
     public static void loadOrCreateConfig() {
         File configFile = new File(CONFIG_PATH);
@@ -77,16 +70,6 @@ public class ConfigVillager {
         }
     }
 
-    public static Item getItem(String id) {
-        for (Item item :  Registries.ITEM) {
-            if(Objects.equals(id, item.asItem().toString())) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-
     public static void getTrader(String villager, MerchantGui gui) {
 
         JsonArray jsonArray = config.getAsJsonArray(villager);
@@ -102,19 +85,46 @@ public class ConfigVillager {
             String out = trade.get("out").getAsString();
             int outCount = trade.get("out_count").getAsInt();
 
-            gui.addTrade(new TradeOffer(
-                    new TradedItem(Objects.requireNonNull(ConfigVillager.getItem(buy)), count),
-                     Optional.of(new TradedItem(Objects.requireNonNull(ConfigVillager.getItem(buy2)), count2)),
-                    new GuiElementBuilder(Objects.requireNonNull(ConfigVillager.getItem(out)))
+            if(!Objects.equals(buy2, "air")) {
+                gui.addTrade(
+                        new TradeOffer(
+                             new TradedItem( Registries.ITEM.get(new Identifier(buy)), count),
+
+                                Optional.of(new TradedItem( Registries.ITEM.get(new Identifier(buy2)), count2)),
+
+                        new GuiElementBuilder( Registries.ITEM.get(new Identifier(out)))
                             .setCount(outCount)
                             .asStack(),
-                    1,
+                    9999,
                     1,
                     1
-            ));
+            ));}
+            else {
+                gui.addTrade(
+                        new TradeOffer(
+
+                                new TradedItem( Registries.ITEM.get(new Identifier(buy)), count),
+                                new GuiElementBuilder(Registries.ITEM.get(new Identifier(out)))
+                                        .setCount(outCount)
+                                        .asStack(),
+                                9999,
+                                1,
+                                1
+                        ));
+            }
         }
     }
 
+
+    public static void setBuyMoney(int i, String villager) {
+        JsonArray jsonArray = config.getAsJsonArray(villager);
+        JsonElement jsonElement = jsonArray.get(i);
+        JsonObject trade = jsonElement.getAsJsonObject();
+        int buyMultiplier = 1;
+        trade.addProperty("count", trade.get("count").getAsInt() + buyMultiplier);
+        saveConfig();
+        loadConfig();
+    }
 //    // Метод для получения значений конфигурации
 //    public static String getSetting1() {
 //        return config.get("setting1").getAsString();

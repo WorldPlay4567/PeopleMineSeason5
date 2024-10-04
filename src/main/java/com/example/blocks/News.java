@@ -144,16 +144,5 @@ public class News extends Block implements PolymerBlock, PolymerTexturedBlock, B
             return 0;
         }
 
-
-        @Override
-        public void notifyUpdate(HolderAttachment.UpdateType updateType) {
-            if (updateType == BlockAwareAttachment.BLOCK_STATE_UPDATE) {
-                var state = this.blockState();
-                this.main.setItem(getModelItem());
-                this.main.setYaw(rotate(facing));
-                this.tick();
-            }
-
-        }
     }
 }

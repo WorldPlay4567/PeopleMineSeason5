@@ -1,5 +1,6 @@
 package com.example.mixin;
 
+import com.example.PeopleMineSeason5;
 import com.example.utility.ConfigVillager;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.MerchantGui;
@@ -59,13 +60,24 @@ public class VillagerMixin {
 				public void onSuggestSell(TradeOffer offer) {
 					if (offer != null && offer.getSellItem() != null) {
 
-						offer.getSellItem().set(DataComponentTypes.CUSTOM_NAME, ((MutableText) player.getName()).append(Text.literal("'s ")).append(offer.getSellItem().getName()));
+
 						this.sendUpdate();
 					}
+
 				}
 				@Override
 				public void setExperience(int experience) {
 
+				}
+
+
+				@Override
+				public boolean onTrade(TradeOffer offer) {
+
+					int i = this.getOfferIndex(offer);
+					ConfigVillager.setBuyMoney(i, "stone");
+					this.sendUpdate();
+					return true;
 				}
 
 			};
@@ -75,7 +87,7 @@ public class VillagerMixin {
 
 
 //			gui.addTrade(new TradeOffer(
-//					new TradedItem(ConfigVillager.getItem("stone"), 1),
+//					new TradedItem(Items.EMERALD, 1),
 //					new GuiElementBuilder(Items.ANDESITE)
 //							.glow()
 //							.setCount(16)
