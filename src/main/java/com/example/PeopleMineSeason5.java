@@ -8,25 +8,34 @@ import com.example.items.ItemsInit;
 import com.example.utility.ConfigVillager;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.sgui.api.GuiHelpers;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import eu.pb4.sgui.api.gui.SimpleGui;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.world.World;
@@ -71,10 +80,22 @@ public class PeopleMineSeason5 implements ModInitializer {
 //					.executes(PeopleMineSeason5::gui));
 //		});
 
+		UseBlockCallback.EVENT.register((player, world, hand,hitResult) -> {
+			ItemStack itemStack = player.getStackInHand(hand);
+			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 
+			if (itemStack.getItem() == Items.CARROT && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.FARMLAND) {
+				if (!world.isClient) {
+					serverPlayer.playerScreenHandler.sendContentUpdates();
+				}
+				for (int i = 0; i < 9; i++) {
+					GuiHelpers.sendSlotUpdate(serverPlayer,-2, i, player.getInventory().getStack(i));
+				}
+				return ActionResult.FAIL;
 
-
-
+            }
+			return ActionResult.PASS;
+		});
 
 //		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 //			if (hitResult == null) {
@@ -97,6 +118,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 //					.executes(PeopleMineSeason5::test7));});
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+
+
 				World world = player.getWorld();
 				UUID playerId = player.getUuid();
 

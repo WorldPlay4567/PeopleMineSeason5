@@ -59,8 +59,6 @@ public class VillagerMixin {
 				@Override
 				public void onSuggestSell(TradeOffer offer) {
 					if (offer != null && offer.getSellItem() != null) {
-
-
 						this.sendUpdate();
 					}
 
