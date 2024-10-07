@@ -1,7 +1,6 @@
 package com.example.blocks;
 
 import com.example.PeopleMineSeason5;
-import com.example.items.ItemsInit;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -9,7 +8,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 
@@ -33,7 +31,7 @@ public class BlockInit {
         var block = Registry.register(BLOCK, id,
                 new CustomBlockTest(FabricBlockSettings.copy(Blocks.DIAMOND_BLOCK), type,"block/" + modelId));
 
-        Registry.register(Registries.ITEM, id, new DefaultItem(new Item.Settings(), block, "block/" + modelId));
+        Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings(), block, "block/" + modelId));
 
         return block;
     }
@@ -43,7 +41,7 @@ public class BlockInit {
 
         var block = Registry.register(Registries.BLOCK, id, item);
 
-        Registry.register(Registries.ITEM, id, new DefaultItem(new Item.Settings(), block, "block/" + path));
+        Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings(), block, "block/" + path));
         return block;
     }
 

@@ -63,6 +63,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 	public void onInitialize() {
 		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
 		PolymerResourcePackUtils.addModAssets("minecraft");
+		PolymerResourcePackUtils.addModAssets("space");
 
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");

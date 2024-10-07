@@ -100,10 +100,12 @@ public class News extends Block implements PolymerBlock, PolymerTexturedBlock, B
         SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6,player,false);
 
         Text message = Text.literal("")
-                .append(Text.translatable("space.-86")
-                        .append(Text.literal("\u0006").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE))))
-                .append(Text.translatable("space.-2"))
-                .append(Text.literal("\u0007").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE)));
+
+                .append(Text.translatable("space.-86").styled(style -> style.withFont(new Identifier("space","default")))
+                .append(Text.literal("\u0006").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE))))
+
+                .append(Text.translatable("space.-2").styled(style -> style.withFont(new Identifier("space","default")))
+                .append(Text.literal("\u0007").styled(style -> style.withFont(new Identifier("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
         gui.setTitle(message);
         gui.open();
     }

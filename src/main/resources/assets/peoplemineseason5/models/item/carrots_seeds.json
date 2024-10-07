@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "peoplemineseason5:item/carrots_seeds"
+  }
+}

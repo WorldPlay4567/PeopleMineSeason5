@@ -13,11 +13,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-public class DefaultItem extends BlockItem implements PolymerItem {
+public class DefaultItemBlock extends BlockItem implements PolymerItem {
 
     private final PolymerModelData polymerModel;
 
-    public DefaultItem(Item.Settings settings, Block block, String modelId) {
+    public DefaultItemBlock(Item.Settings settings, Block block, String modelId) {
         super(block, settings);
         this.polymerModel = PolymerResourcePackUtils.requestModel(Items.BARRIER, new Identifier(PeopleMineSeason5.MOD_ID, modelId));
 
