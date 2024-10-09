@@ -21,13 +21,19 @@ import net.minecraft.village.TradedItem;
 
 public class ConfigVillager {
 
+    private final String CONFIG_PATH = "config/";
+    private JsonObject config;
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private static final String CONFIG_PATH = "config/villager_trade.json";
-    private static JsonObject config;
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final String NAME;
 
-    public static void loadOrCreateConfig() {
-        File configFile = new File(CONFIG_PATH);
+
+    public ConfigVillager(String name) {
+        NAME = name;
+    }
+
+    public void loadOrCreateConfig() {
+        File configFile = new File(CONFIG_PATH + NAME + ".json");
 
         if (configFile.exists()) {
             loadConfig();
@@ -37,20 +43,20 @@ public class ConfigVillager {
     }
 
     // Метод для загрузки конфигурации
-    public static void loadConfig() {
-        try (FileReader reader = new FileReader(CONFIG_PATH)) {
-            // Парсим JSON и сохраняем его в переменную config
+    public void loadConfig() {
+        try (FileReader reader = new FileReader(CONFIG_PATH + NAME + ".json")) {
+
             config = JsonParser.parseReader(reader).getAsJsonObject();
-            System.out.println("Конфигурация загружена: " + config.toString());
+            System.out.println("Конфигурация загружена: " + NAME);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Ошибка при загрузке конфигурации.");
         }
     }
 
-    public static void getTrader(String villager, MerchantGui gui) {
+    public void getTrader(MerchantGui gui) {
 
-        JsonArray jsonArray = config.getAsJsonArray(villager);
+        JsonArray jsonArray = config.getAsJsonArray(NAME);
         for(JsonElement jsonElement : jsonArray) {
             JsonObject trade = jsonElement.getAsJsonObject();
 
@@ -63,7 +69,7 @@ public class ConfigVillager {
             String out = trade.get("out").getAsString();
             int outCount = trade.get("out_count").getAsInt();
 
-            if(!Objects.equals(buy2, "air")) {
+            if(!Objects.equals(buy2, "minecraft:air")) {
                 gui.addTrade(
                         new TradeOffer(
                              new TradedItem( Registries.ITEM.get(new Identifier(buy)), count),
@@ -94,8 +100,8 @@ public class ConfigVillager {
     }
 
 
-    public static void setBuyMoney(int i, String villager) {
-        JsonArray jsonArray = config.getAsJsonArray(villager);
+    public void setBuyMoney(int i) {
+        JsonArray jsonArray = config.getAsJsonArray(NAME);
         JsonElement jsonElement = jsonArray.get(i);
         JsonObject trade = jsonElement.getAsJsonObject();
         int buyMultiplier = 1;
@@ -106,11 +112,10 @@ public class ConfigVillager {
         } else {
             trade.addProperty("count", trade.get("count").getAsInt() + buyMultiplier);
         }
-        saveConfig();
-        loadConfig();
+
     }
-    private static void saveConfig() {
-        try (FileWriter writer = new FileWriter(CONFIG_PATH)) {
+    void saveConfig() {
+        try (FileWriter writer = new FileWriter(CONFIG_PATH + NAME + ".json")) {
             gson.toJson(config, writer);
             System.out.println("Конфигурация обновлена.");
         } catch (IOException e) {

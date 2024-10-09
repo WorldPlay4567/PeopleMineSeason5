@@ -6,6 +6,7 @@ import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
 import com.example.utility.ConfigVillager;
+import com.example.utility.ConfigVillagerRegister;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.sgui.api.GuiHelpers;
@@ -65,17 +66,23 @@ public class PeopleMineSeason5 implements ModInitializer {
 		PolymerResourcePackUtils.addModAssets("minecraft");
 		PolymerResourcePackUtils.addModAssets("space");
 
+		ConfigVillagerRegister.init();
+
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
 
-		ConfigVillager.loadOrCreateConfig();
+//		ConfigVillager.loadOrCreateConfig();
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));
 		});
 
+
+		ServerWorldEvents.UNLOAD.register((server, world) -> {
+			ConfigVillagerRegister.save();
+		});
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("gui")
 //					.executes(PeopleMineSeason5::gui));

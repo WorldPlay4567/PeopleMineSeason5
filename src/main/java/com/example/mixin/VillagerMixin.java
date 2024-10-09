@@ -2,6 +2,7 @@ package com.example.mixin;
 
 import com.example.PeopleMineSeason5;
 import com.example.utility.ConfigVillager;
+import com.example.utility.ConfigVillagerRegister;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.component.DataComponentTypes;
@@ -38,7 +39,11 @@ public class VillagerMixin {
 		VillagerEntity villager = (VillagerEntity) (Object) this;
 
 		if (villager.hasCustomName() && "Каменщик".equals(villager.getCustomName().getString())) {
-			test7((ServerPlayerEntity) player);
+			test7((ServerPlayerEntity) player, ConfigVillagerRegister.STONE);
+			cir.setReturnValue(ActionResult.FAIL);
+		}
+		if (villager.hasCustomName() && "Фермер".equals(villager.getCustomName().getString())) {
+			test7((ServerPlayerEntity) player, ConfigVillagerRegister.PRODUCT);
 			cir.setReturnValue(ActionResult.FAIL);
 		}
 		// This code is injected into the start of MinecraftServer.loadWorld()V
@@ -46,9 +51,8 @@ public class VillagerMixin {
 
 
 	@Unique
-	private static void test7(ServerPlayerEntity player) {
+	private static void test7(ServerPlayerEntity player, ConfigVillager configVillager) {
 		try {
-
 			MerchantGui gui = new MerchantGui(player, false) {
 
 				@Override
@@ -73,7 +77,8 @@ public class VillagerMixin {
 				public boolean onTrade(TradeOffer offer) {
 
 					int i = this.getOfferIndex(offer);
-					ConfigVillager.setBuyMoney(i, "stone");
+//					ConfigVillager.setBuyMoney(i, "stone");
+					configVillager.setBuyMoney(i);
 					this.sendUpdate();
 					return true;
 				}
@@ -95,7 +100,8 @@ public class VillagerMixin {
 //					1
 //			));
 
-			ConfigVillager.getTrader("stone", gui);
+//			ConfigVillager.getTrader("stone", gui);
+			configVillager.getTrader(gui);
 
 			gui.open();
 
