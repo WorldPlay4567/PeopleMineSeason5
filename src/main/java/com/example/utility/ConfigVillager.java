@@ -99,7 +99,13 @@ public class ConfigVillager {
         JsonElement jsonElement = jsonArray.get(i);
         JsonObject trade = jsonElement.getAsJsonObject();
         int buyMultiplier = 1;
-        trade.addProperty("count", trade.get("count").getAsInt() + buyMultiplier);
+
+        if(trade.get("count").getAsInt() >= 64) {
+            trade.addProperty("buy", "minecraft:emerald_block");
+            trade.addProperty("count", 1);
+        } else {
+            trade.addProperty("count", trade.get("count").getAsInt() + buyMultiplier);
+        }
         saveConfig();
         loadConfig();
     }
