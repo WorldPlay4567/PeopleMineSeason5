@@ -26,6 +26,7 @@ public class ItemsInit {
     public static final BlockItem CARROTS_SEEDS = new AliasedBlockItemPolymer(Blocks.CARROTS,new Item.Settings().component(DataComponentTypes.CUSTOM_NAME,Text.translatable("item.peoplemineseason5.carrots_seeds").setStyle(Style.EMPTY.withItalic(false).withColor(Formatting.GREEN))),CARROTS_SEEDS_ITEM);
 
 
+    public static final Item EVGINES_SWORD = Items.register(Identifier.of(PeopleMineSeason5.MOD_ID, "evgines_sword"),new DefaultItem(new Item.Settings().fireproof().rarity(Rarity.EPIC), Items.DIAMOND_SWORD, "evgines_sword"));
 
     public static final Item CUSTOM_BLOCK_TEST = register(BlockInit.CUSTOM_BLOCK);
     public static final ItemGroup PEOPLEMINE = Registry.register(Registries.ITEM_GROUP, new Identifier(PeopleMineSeason5.MOD_ID,"peoplemine5"),
