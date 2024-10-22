@@ -7,6 +7,7 @@ import eu.pb4.sgui.api.elements.GuiElementInterface;
 import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -19,6 +20,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -44,8 +46,18 @@ public class AnvilBlockMixin {
             player.sendMessage(Text.literal("Вы использовали наковальню"), true);
 
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+            SimpleInventory simpleInventory = new SimpleInventory(1);
             final int[] SLOTS = new int[]{0};
-            SimpleGui simpleGui = new SimpleGui(ScreenHandlerType.GENERIC_9X3,serverPlayer,false);
+            SimpleGui simpleGui = new SimpleGui(ScreenHandlerType.GENERIC_9X3,serverPlayer,false){
+                @Override
+                public void onClose() {
+                    super.onClose();
+
+                    ItemEntity item = new ItemEntity(world,pos.getX(),pos.getY() + 1,pos.getZ(),simpleInventory.getStack(0));
+                    
+                    world.spawnEntity(item);
+                }
+            };
 
 
             for(int i = 0; i <= 26; i++) {
@@ -53,27 +65,31 @@ public class AnvilBlockMixin {
                     continue;
                 }
 
-                simpleGui.setSlot(i, new GuiElementBuilder(Items.GRAY_STAINED_GLASS_PANE));
+                simpleGui.setSlot(i, new GuiElementBuilder(Items.GRAY_STAINED_GLASS_PANE)
+                        .setName(Text.literal("")));
             }
 
 
-            simpleGui.setSlotRedirect(13, new Slot(new SimpleInventory(1),0,0,0));
+            simpleGui.setSlotRedirect(13, new Slot(simpleInventory,0,0,0));
 
             simpleGui.setSlot(15,new GuiElementBuilder(Items.GREEN_STAINED_GLASS_PANE)
+                    .setName(Text.literal("Подтвердить покупку").styled(style -> {
+                        return style.withColor(Formatting.GREEN);
+                    }))
                     .setCallback(((index, clickType, actionType) -> {
                         if (clickType == ClickType.MOUSE_LEFT) {
 
-                            if(simpleGui.getSlot(13) == null) {
+                            if(simpleGui.getSlotRedirect(13) == null) {
                                 player.sendMessage(Text.literal("Не верная оплата"));
                                 simpleGui.close();
                             }else {
                                 System.out.print(simpleGui);
-                                System.out.print(simpleGui.getSlot(13).getItemStack());
+                                System.out.print(simpleGui.getSlotRedirect(13).getStack());
 
-                                ItemStack itemStack = simpleGui.getSlot(13).getItemStack();
+                                ItemStack itemStack = simpleGui.getSlotRedirect(13).getStack();
 
-                                if(itemStack.getItem() == Items.EMERALD) {
-
+                                if(itemStack.getItem() == Items.EMERALD && itemStack.getCount() == 32) {
+                                    simpleInventory.setStack(0,new ItemStack(Items.AIR));
                                     simpleGui.close();
 
                                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
@@ -85,7 +101,9 @@ public class AnvilBlockMixin {
             cir.setReturnValue(ActionResult.FAIL);
             simpleGui.open();
 
-            simpleGui.setTitle(Text.literal("Потвердите покупку:"));
+            simpleGui.setTitle(Text.literal("Цена:").append(Text.literal("32 Изумруда").styled(style -> {
+                return style.withColor(Formatting.DARK_GREEN);
+            })));
 
 
 
