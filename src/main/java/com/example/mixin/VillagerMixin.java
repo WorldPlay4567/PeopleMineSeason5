@@ -29,10 +29,6 @@ import java.io.ObjectInputFilter;
 @Mixin(VillagerEntity.class)
 public class VillagerMixin {
 
-
-
-
-
 	@Inject(at = @At("HEAD"), method = "interactMob", cancellable = true)
 	public void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
 

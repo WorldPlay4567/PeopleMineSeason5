@@ -41,8 +41,6 @@ public class AnvilBlockMixin {
         if (world.isClient()) {
             cir.setReturnValue(ActionResult.SUCCESS);
         } else {
-            // Ваша кастомная логика здесь
-            // Например, открытие вашего собственного интерфейса или выполнение действия:
             player.sendMessage(Text.literal("Вы использовали наковальню"), true);
 
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
@@ -73,14 +71,12 @@ public class AnvilBlockMixin {
             simpleGui.setSlotRedirect(13, new Slot(simpleInventory,0,0,0));
 
             simpleGui.setSlot(15,new GuiElementBuilder(Items.GREEN_STAINED_GLASS_PANE)
-                    .setName(Text.literal("Подтвердить покупку").styled(style -> {
-                        return style.withColor(Formatting.GREEN);
-                    }))
+                    .setName(Text.literal("Подтвердить покупку").styled(style -> style.withColor(Formatting.GREEN)))
                     .setCallback(((index, clickType, actionType) -> {
                         if (clickType == ClickType.MOUSE_LEFT) {
 
                             if(simpleGui.getSlotRedirect(13) == null) {
-                                player.sendMessage(Text.literal("Не верная оплата"));
+                                player.sendMessage(Text.literal("Не верная оплата"),false);
                                 simpleGui.close();
                             }else {
                                 System.out.print(simpleGui);
@@ -101,9 +97,7 @@ public class AnvilBlockMixin {
             cir.setReturnValue(ActionResult.FAIL);
             simpleGui.open();
 
-            simpleGui.setTitle(Text.literal("Цена:").append(Text.literal("32 Изумруда").styled(style -> {
-                return style.withColor(Formatting.DARK_GREEN);
-            })));
+            simpleGui.setTitle(Text.literal("Цена: ").append(Text.literal("32 Изумруда").styled(style -> style.withColor(Formatting.DARK_GREEN))));
 
 
 

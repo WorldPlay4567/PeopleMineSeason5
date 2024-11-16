@@ -5,49 +5,36 @@ import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
-import com.example.utility.ConfigVillager;
 import com.example.utility.ConfigVillagerRegister;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.sgui.api.GuiHelpers;
-import eu.pb4.sgui.api.gui.MerchantGui;
-import eu.pb4.sgui.api.gui.SimpleGui;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.village.TradeOffer;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 
 public class PeopleMineSeason5 implements ModInitializer {
@@ -65,6 +52,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
 		PolymerResourcePackUtils.addModAssets("minecraft");
 		PolymerResourcePackUtils.addModAssets("space");
+		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "item"));
+		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "block"));
 
 		ConfigVillagerRegister.init();
 
@@ -124,63 +113,63 @@ public class PeopleMineSeason5 implements ModInitializer {
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("test7")
 //					.executes(PeopleMineSeason5::test7));});
-		ServerTickEvents.START_SERVER_TICK.register(server -> {
-			for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-
-
-				World world = player.getWorld();
-				UUID playerId = player.getUuid();
-
-				// Проверяем наличие алмаза в инвентаре
-				boolean hasDiamond = player.getInventory().contains(Items.DIAMOND.getDefaultStack());
-
-				if (hasDiamond) {
-					// Если у игрока есть алмаз, создаем или двигаем Armor Stand
-					if (!playerArmorStands.containsKey(playerId)) {
-						// Спавним Armor Stand
-						ArmorStandEntity armorStand = new ArmorStandEntity(EntityType.ARMOR_STAND, world);
-						NbtCompound nbt = new NbtCompound();
-						nbt.putBoolean("Small", true);  // Устанавливаем флаг маленького размера
-						armorStand.readNbt(nbt);
-						armorStand.setNoGravity(true);  // Отключаем гравитацию
-						armorStand.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), 0, 0);
-						world.spawnEntity(armorStand);
-						playerArmorStands.put(playerId, armorStand);
-					}
-
-					// Плавно двигаем Armor Stand к плечу игрока с помощью телепортации
-					ArmorStandEntity armorStand = playerArmorStands.get(playerId);
-
-					// Вычисляем позицию плеча
-					Vec3d shoulderPos = getPlayerShoulderPosition(player);
-
-					// Вычисляем текущую позицию Armor Stand
-					Vec3d standPos = armorStand.getPos();
-
-					// Вычисляем направление движения к плечу игрока
-					Vec3d direction = shoulderPos.subtract(standPos).normalize();
-
-					// Вычисляем расстояние между Armor Stand и плечом игрока
-					double distance = shoulderPos.distanceTo(standPos);
-
-					// Чем больше расстояние, тем больше скорость (добавим минимальную скорость)
-					double speed = Math.max(0, distance * 0.5); // Минимальная скорость - 0.3, скорость увеличивается с расстоянием
-
-					// Новая позиция Armor Stand (на шаг ближе к плечу игрока с учетом скорости)
-					Vec3d newPos = standPos.add(direction.multiply(speed));
-
-					// Телепортируем Armor Stand на новую позицию
-					armorStand.teleport(newPos.x, newPos.y, newPos.z);
-
-				} else {
-					// Если алмаза нет, удаляем Armor Stand
-					if (playerArmorStands.containsKey(playerId)) {
-						ArmorStandEntity armorStand = playerArmorStands.remove(playerId);
-						armorStand.discard(); // Удаляем сущность
-					}
-				}
-			}
-		});
+//		ServerTickEvents.START_SERVER_TICK.register(server -> {
+//			for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+//
+//
+//				World world = player.getWorld();
+//				UUID playerId = player.getUuid();
+//
+//				// Проверяем наличие алмаза в инвентаре
+//				boolean hasDiamond = player.getInventory().contains(Items.DIAMOND.getDefaultStack());
+//
+//				if (hasDiamond) {
+//					// Если у игрока есть алмаз, создаем или двигаем Armor Stand
+//					if (!playerArmorStands.containsKey(playerId)) {
+//						// Спавним Armor Stand
+//						ArmorStandEntity armorStand = new ArmorStandEntity(EntityType.ARMOR_STAND, world);
+//						NbtCompound nbt = new NbtCompound();
+//						nbt.putBoolean("Small", true);  // Устанавливаем флаг маленького размера
+//						armorStand.readNbt(nbt);
+//						armorStand.setNoGravity(true);  // Отключаем гравитацию
+//						armorStand.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), 0, 0);
+//						world.spawnEntity(armorStand);
+//						playerArmorStands.put(playerId, armorStand);
+//					}
+//
+//					// Плавно двигаем Armor Stand к плечу игрока с помощью телепортации
+//					ArmorStandEntity armorStand = playerArmorStands.get(playerId);
+//
+//					// Вычисляем позицию плеча
+//					Vec3d shoulderPos = getPlayerShoulderPosition(player);
+//
+//					// Вычисляем текущую позицию Armor Stand
+//					Vec3d standPos = armorStand.getPos();
+//
+//					// Вычисляем направление движения к плечу игрока
+//					Vec3d direction = shoulderPos.subtract(standPos).normalize();
+//
+//					// Вычисляем расстояние между Armor Stand и плечом игрока
+//					double distance = shoulderPos.distanceTo(standPos);
+//
+//					// Чем больше расстояние, тем больше скорость (добавим минимальную скорость)
+//					double speed = Math.max(0, distance * 0.5); // Минимальная скорость - 0.3, скорость увеличивается с расстоянием
+//
+//					// Новая позиция Armor Stand (на шаг ближе к плечу игрока с учетом скорости)
+//					Vec3d newPos = standPos.add(direction.multiply(speed));
+//
+//					// Телепортируем Armor Stand на новую позицию
+//					armorStand.teleport(newPos.x, newPos.y, newPos.z);
+//
+//				} else {
+//					// Если алмаза нет, удаляем Armor Stand
+//					if (playerArmorStands.containsKey(playerId)) {
+//						ArmorStandEntity armorStand = playerArmorStands.remove(playerId);
+//						armorStand.discard(); // Удаляем сущность
+//					}
+//				}
+//			}
+//		});
 
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 

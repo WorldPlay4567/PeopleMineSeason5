@@ -78,7 +78,7 @@ public class CustomBlockEntity extends BlockEntity implements MinimalSidedInvent
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return AbstractFurnaceBlockEntity.canUseAsFuel(stack);
+        return true;
     }
 
     @Override

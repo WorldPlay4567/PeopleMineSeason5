@@ -4,13 +4,9 @@ package com.example.items;
 import com.example.PeopleMineSeason5;
 import com.example.particle.CubeParticle;
 import eu.pb4.polymer.core.api.item.PolymerItem;
-import eu.pb4.polymer.core.api.item.PolymerItemUtils;
-import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;
 
-import net.minecraft.client.item.TooltipType;
-import net.minecraft.component.DataComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,40 +14,37 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
-import net.minecraft.structure.StructureTemplateManager;
-import net.minecraft.text.PlainTextContent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
+import xyz.nucleoid.packettweaker.PacketContext;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
 
 public class BluePrint extends Item implements PolymerItem {
     private static int tick;
-    private final PolymerModelData modelData = PolymerResourcePackUtils.requestModel(Items.PAPER, new Identifier(PeopleMineSeason5.MOD_ID, "item/blue_print"));
-    public BluePrint(Settings settings) {
+
+    //    private final PolymerModelData modelData = PolymerResourcePackUtils.requestModel(Items.PAPER, new Identifier(PeopleMineSeason5.MOD_ID, "item/blue_print"));
+    public BluePrint(Settings settings, String modelId) {
         super(settings);
+        Identifier polymerModel = PolymerResourcePackUtils.getBridgedModelId(Identifier.of(PeopleMineSeason5.MOD_ID, modelId));
+
     }
+
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
+    public ActionResult.Success use(World world, PlayerEntity playerEntity, Hand hand) {
 
         ItemStack itemStack = playerEntity.getStackInHand(hand);
 
@@ -72,10 +65,10 @@ public class BluePrint extends Item implements PolymerItem {
 
                         playerEntity.sendMessage(Text.literal(message).setStyle(style),true);
 
-                        return new TypedActionResult<>(ActionResult.PASS, itemStack);
+                        return ActionResult.SUCCESS_SERVER;
                     } else {
 
-                    Identifier identifier = new Identifier(nbtCompound.get("structure").asString());
+                    Identifier identifier = Identifier.of(nbtCompound.get("structure").asString());
 
                     float x = playerEntity.getBlockPos().getX();
                     float y = playerEntity.getBlockPos().getY() - 1;
@@ -94,11 +87,11 @@ public class BluePrint extends Item implements PolymerItem {
 
                 itemStack.decrement(1);
             }
-            return new TypedActionResult<>(ActionResult.SUCCESS, itemStack);
+            return ActionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
         NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
         if (nbtComponent != null) {
 
@@ -131,7 +124,7 @@ public class BluePrint extends Item implements PolymerItem {
 
                 player.sendMessage(Text.literal(message).setStyle(style),true);
             } else {
-                Identifier identifier = new Identifier(nbtCompound.get("structure").asString());
+                Identifier identifier = Identifier.of(nbtCompound.get("structure").asString());
                 StructureTemplate structureTemplate = Objects.requireNonNull(player.getServer()).getStructureTemplateManager().getTemplateOrBlank(identifier);
                 Vec3i vec3i = structureTemplate.getSize();
 //                System.out.println(vec3i);
@@ -147,19 +140,15 @@ public class BluePrint extends Item implements PolymerItem {
 
         }
     }
-
-
-
     @Override
-    public int getPolymerCustomModelData(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        return 2;
-    }
-
-    @Override
-    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+    public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
         return Items.PAPER;
     }
 
+    @Override
+    public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
+        return Identifier.of("peoplemineseason5","blue_print");
+    }
 }
 
 
