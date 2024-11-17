@@ -1,6 +1,8 @@
 
 package com.example.items;
 
+import com.example.PeopleMineSeason5;
+import eu.pb4.polymer.blocks.api.PolymerBlockModel;
 import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.item.Item;
@@ -12,13 +14,13 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 public class DefaultItem extends Item implements PolymerItem {
 
-    private final Identifier polymerModel;
+    public Identifier polymerModel;
     Item item;
 
     public DefaultItem(Settings settings, Item item, String path) {
         super(settings);
         this.item = item;
-        this.polymerModel = PolymerResourcePackUtils.getBridgedModelId(Identifier.of("blocktest", path));
+        polymerModel = Identifier.of(PeopleMineSeason5.MOD_ID, path);
 //        final PolymerModelData modelData = PolymerResourcePackUtils.requestModel(item, new Identifier(PeopleMineSeason5.MOD_ID, "item/" + path));
 
     }
@@ -30,7 +32,7 @@ public class DefaultItem extends Item implements PolymerItem {
     }
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return this.polymerModel;
+        return polymerModel;
     }
 }
 

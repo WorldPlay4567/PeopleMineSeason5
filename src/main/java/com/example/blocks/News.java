@@ -112,7 +112,7 @@ public class News extends Block implements PolymerBlock, PolymerTexturedBlock, B
         private final ItemDisplayElement main;
 
         public Model(BlockState state) {
-            this.main = ItemDisplayElementUtil.createSimple(Identifier.of(PeopleMineSeason5.MOD_ID,"news"));
+            this.main = ItemDisplayElementUtil.createSimple(Identifier.of(PeopleMineSeason5.MOD_ID,"block/news"));
             this.main.setDisplaySize(1, 1);
             this.main.setScale(new Vector3f(2));
             this.main.setYaw(state.get(FACING).asRotation());

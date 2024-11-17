@@ -14,21 +14,26 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +86,14 @@ public class PeopleMineSeason5 implements ModInitializer {
 			ItemStack itemStack = player.getStackInHand(hand);
 			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 
-			if (itemStack.getItem() == Items.CARROT && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.FARMLAND) {
+			BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+
+			BlockPos blockPos = blockHitResult.getBlockPos(); // Получаем позицию блока, по которому кликнули
+
+			if (itemStack.getItem() == Items.CARROT && (CarrotBlockCheck(world, blockPos) || world.getBlockState(blockPos).getBlock() == Blocks.FARMLAND)) {
+
+				System.out.print("DEBUG : NO PLACE");
+
 				if (!world.isClient) {
 					serverPlayer.playerScreenHandler.sendContentUpdates();
 				}
@@ -183,6 +195,23 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ItemsInit.init();
 		BlockInit.init();
 
+	}
+
+	private boolean CarrotBlockCheck(World world, BlockPos blockPos) {
+
+		for (Direction direction : new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST}) {
+
+			BlockPos Pos = blockPos.offset(direction).down();
+			BlockState adjacentBlockState = world.getBlockState(Pos);
+
+			if(adjacentBlockState.getBlock() == Blocks.FARMLAND) {
+
+
+				return true;
+
+            };
+		}
+		return false;
 	}
 
 	private static int reload(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {

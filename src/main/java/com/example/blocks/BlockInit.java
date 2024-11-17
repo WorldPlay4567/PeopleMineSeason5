@@ -47,7 +47,7 @@ public class BlockInit {
                         , type,"block/" + modelId));
 
         Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings()
-                .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,modelId))), block, "block/" + modelId));
+                .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,modelId))), block, modelId));
 
         return block;
     }
@@ -59,7 +59,7 @@ public class BlockInit {
 
         Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings()
                 .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,path)))
-                ,block, "block/" + path));
+                ,block, path));
         return block;
     }
 
