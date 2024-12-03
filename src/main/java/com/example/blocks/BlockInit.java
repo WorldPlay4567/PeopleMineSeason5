@@ -38,6 +38,7 @@ public class BlockInit {
             .registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of(PeopleMineSeason5.MOD_ID,"cat"))),
             BlockModelType.TRANSPARENT_BLOCK,"cat"));
 
+//    public static final Block ANVIL_BLOCK = Registry.register(BLOCK, Identifier.of("minecraft","anvil"),new AnvilBlockRemake(Block.Settings.copy(Blocks.ANVIL).registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of("minecraft","anvil")))));
 
     public static Block registerOld(BlockModelType type, String modelId) {
         var id = Identifier.of("peoplemineseason5", modelId);

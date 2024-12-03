@@ -5,15 +5,21 @@ import com.example.blocks.BlockInit;
 import com.example.blocks.CustomBlockList;
 import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
+import com.example.utility.CalendarChest;
 import com.example.utility.ConfigVillagerRegister;
+import com.example.utility.build.BuildCrafting;
+import com.example.utility.build.BuildCraftingConfig;
+import com.example.utility.build.BuildCraftingList;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.sgui.api.GuiHelpers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -37,9 +43,12 @@ import org.apache.logging.log4j.core.jmx.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.example.utility.build.BuildCraftingList.onServerStart;
 
 
 public class PeopleMineSeason5 implements ModInitializer {
@@ -65,9 +74,10 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
-
+		LOGGER.info(FabricLoader.getInstance().getGameDir().toString());
 //		ConfigVillager.loadOrCreateConfig();
-
+		ServerLifecycleEvents.SERVER_STARTED.register(BuildCraftingList::onServerStart);
+		ServerLifecycleEvents.SERVER_STOPPING.register(BuildCraftingList::onServerClose);
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));
@@ -106,6 +116,17 @@ public class PeopleMineSeason5 implements ModInitializer {
 			return ActionResult.PASS;
 		});
 
+
+//		UseBlockCallback.EVENT.register((player, world, hand,hitResult) -> {
+//
+//			BlockPos blockPos = hitResult.getBlockPos();
+//			if(world.getBlockState(blockPos).getBlock() == Blocks.CHEST) {
+//				CalendarChest.createCalendarChest(world,blockPos);
+//			}
+//
+//
+//			return ActionResult.PASS;
+//		});
 //		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 //			if (hitResult == null) {
 //				return ActionResult.PASS;
@@ -216,8 +237,13 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 	private static int reload(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) {
 		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
-		ConfigVillagerRegister.init();
-        return 1;
+//		ConfigVillagerRegister.init();
+		ServerPlayerEntity serverPlayer = serverCommandSourceCommandContext.getSource().getPlayer();
+
+
+			return 1;
+
+
     }
 
 	private Vec3d getPlayerShoulderPosition(ServerPlayerEntity player) {

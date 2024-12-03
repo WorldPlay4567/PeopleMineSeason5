@@ -3,6 +3,7 @@ package com.example.mixin;
 import com.example.PeopleMineSeason5;
 import com.example.utility.ConfigVillager;
 import com.example.utility.ConfigVillagerRegister;
+import com.example.utility.build.BuildCrafting;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.component.DataComponentTypes;
@@ -41,6 +42,9 @@ public class VillagerMixin {
 		if (villager.hasCustomName() && "Фермер".equals(villager.getCustomName().getString())) {
 			test7((ServerPlayerEntity) player, ConfigVillagerRegister.PRODUCT);
 			cir.setReturnValue(ActionResult.FAIL);
+		}
+		if (villager.hasCustomName() && "Строитель".equals(villager.getCustomName().getString())) {
+		BuildCrafting.selectionGUI((ServerPlayerEntity) player);
 		}
 		// This code is injected into the start of MinecraftServer.loadWorld()V
 	}

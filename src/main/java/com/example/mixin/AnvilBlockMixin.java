@@ -1,39 +1,89 @@
 package com.example.mixin;
 
-import com.example.utility.MinimalSidedInventory;
 import eu.pb4.sgui.api.ClickType;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
-import eu.pb4.sgui.api.elements.GuiElementInterface;
 import eu.pb4.sgui.api.gui.SimpleGui;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Debug(export = true)
 @Mixin(AnvilBlock.class)
-public class AnvilBlockMixin {
+public abstract class AnvilBlockMixin{
+
+//    @Unique
+//    private static final BooleanProperty BUY = BooleanProperty.of("buy");
+//
+//    public AnvilBlockMixin(Settings settings) {
+//        super(settings);
+//    }
+//
+//    @Inject(at = @At("TAIL"), method = "appendProperties(Lnet/minecraft/state/StateManager$Builder;)V")
+//    public void appendProperties(StateManager.Builder<Block, BlockState> manager, CallbackInfo ci)
+//    {
+//        manager.add(new Property[]{BUY});
+//    }
+//    @Inject(method = "<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V", at = @At(value = "TAIL"))
+//    private void tailConstructor(AbstractBlock.Settings settings, CallbackInfo ci) {
+//        this.setDefaultState(this.getDefaultState().with(BUY, false));
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//    public AnvilBlockMixin(Settings settings) {
+//        super(settings);
+//        this.setDefaultState(this.getStateManager().getDefaultState().with(BUY,false));
+//    }
+//
+//    @Override
+//    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+//        builder.add(BUY);
+//    }
+
+//    @Override
+//    public BlockState getDefaultState() {
+//        return this.stateManager.getDefaultState().with(BUY, false);
+//
+//    }
+
 
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
