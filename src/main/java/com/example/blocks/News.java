@@ -71,16 +71,10 @@ public class News extends Block implements PolymerBlock, PolymerTexturedBlock, B
 
         return ActionResult.SUCCESS_SERVER;
     }
-
-
-
-
     @Override
     public @Nullable ElementHolder createElementHolder(ServerWorld world, BlockPos pos, BlockState initialBlockState) {
         return new Model(initialBlockState);
     }
-
-
     private static void gui(ServerPlayerEntity player) {
         SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6,player,false);
 

@@ -13,6 +13,21 @@
 			"ascent": 32,
 			"height": 151,
 			"chars": ["\u0007"]
+		}		,
+		{
+			"type": "bitmap",
+			"file": "peoplemineseason5:font/target.png",
+			"ascent": 67,
+			"height": 258,
+			"chars": ["\u0008"]
+		}		,
+		{
+			"type": "bitmap",
+			"file": "peoplemineseason5:font/buildgui.png",
+			"ascent": 67,
+			"height": 258,
+			"chars": ["\u0009"]
 		}
 	]
+
 }

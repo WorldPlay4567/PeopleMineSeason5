@@ -22,10 +22,13 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -93,6 +96,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 //		});
 
 		UseBlockCallback.EVENT.register((player, world, hand,hitResult) -> {
+
 			ItemStack itemStack = player.getStackInHand(hand);
 			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 
@@ -205,7 +209,6 @@ public class PeopleMineSeason5 implements ModInitializer {
 //		});
 
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
-
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			for (ServerPlayerEntity player : players) {
 				BluePrint.tick(player);

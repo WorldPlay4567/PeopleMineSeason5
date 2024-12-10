@@ -3,5 +3,6 @@
   "item.peoplemineseason5.trembling_crystal": "Дрож Кристал",
   "item.peoplemineseason5.news" : "Блок Новостей",
   "item.peoplemineseason5.carrots_seeds": "Семена Морковки",
-  "[build.shop]": "Магазин"
+  "[build.shop]": "Магазин",
+  "container.inventory": " "
 }
