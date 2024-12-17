@@ -20,6 +20,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +29,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.io.ObjectInputFilter;
 
 @Mixin(VillagerEntity.class)
-public class VillagerMixin {
+public abstract class VillagerMixin {
+
 
 	@Inject(at = @At("HEAD"), method = "interactMob", cancellable = true)
 	public void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
@@ -43,8 +45,8 @@ public class VillagerMixin {
 			test7((ServerPlayerEntity) player, ConfigVillagerRegister.PRODUCT);
 			cir.setReturnValue(ActionResult.FAIL);
 		}
-		if (villager.hasCustomName() && "Строитель".equals(villager.getCustomName().getString())) {
-		BuildCrafting.selectionGUI((ServerPlayerEntity) player);
+		if (villager.hasCustomName() && "Строитель".equals(villager.getCustomName().getString()) && !BuildCrafting.playerInteract) {
+		BuildCrafting.selectionGUI((ServerPlayerEntity) player, null);
 		}
 		// This code is injected into the start of MinecraftServer.loadWorld()V
 	}

@@ -7,9 +7,7 @@ import com.example.items.BluePrint;
 import com.example.items.ItemsInit;
 import com.example.utility.CalendarChest;
 import com.example.utility.ConfigVillagerRegister;
-import com.example.utility.build.BuildCrafting;
-import com.example.utility.build.BuildCraftingConfig;
-import com.example.utility.build.BuildCraftingList;
+import com.example.utility.build.*;
 import com.mojang.brigadier.context.CommandContext;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.sgui.api.GuiHelpers;
@@ -28,6 +26,7 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
@@ -47,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -72,6 +72,9 @@ public class PeopleMineSeason5 implements ModInitializer {
 		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "item"));
 		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "block"));
 
+
+
+
 		ConfigVillagerRegister.init();
 
 		LOGGER.info("=====================");
@@ -90,6 +93,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
 			ConfigVillagerRegister.save();
 		});
+		ServerWorldEvents.LOAD.register(BuildStructure::load);
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("gui")
 //					.executes(PeopleMineSeason5::gui));
@@ -213,6 +217,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 			for (ServerPlayerEntity player : players) {
 				BluePrint.tick(player);
 			}
+
 		});
 
 		CustomBlockList.init();
@@ -242,8 +247,20 @@ public class PeopleMineSeason5 implements ModInitializer {
 		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
 //		ConfigVillagerRegister.init();
 		ServerPlayerEntity serverPlayer = serverCommandSourceCommandContext.getSource().getPlayer();
+		ArrayList<BuildBlock> buildBlocks = BuildStructure.getBuild("shop_stone");
+			ServerWorld serverWorld = serverPlayer.getServer().getOverworld();
 
+			for(BuildBlock block : buildBlocks) {
 
+				BlockPos blockPos = serverPlayer.getBlockPos();
+				BlockPos original = new BlockPos(
+						blockPos.getX() + block.getBlockPos().getX(),
+						blockPos.getY() + block.getBlockPos().getY(),
+						blockPos.getZ() + block.getBlockPos().getZ()
+                        );
+
+				serverWorld.setBlockState(original,block.getBlockState());
+			}
 			return 1;
 
 
