@@ -1,53 +1,34 @@
 package com.example.blocks;
 
-import com.example.PeopleMineSeason5;
-import com.example.items.ItemsInit;
-import com.ibm.icu.impl.ICUService;
 import com.mojang.serialization.MapCodec;
 import eu.pb4.factorytools.api.block.FactoryBlock;
-import eu.pb4.factorytools.api.resourcepack.BaseItemProvider;
-import eu.pb4.factorytools.api.virtualentity.BlockModel;
-import eu.pb4.factorytools.api.virtualentity.ItemDisplayElementUtil;
+
 import eu.pb4.polymer.blocks.api.BlockModelType;
-import eu.pb4.polymer.blocks.api.PolymerBlockModel;
-import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
-import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.virtualentity.api.BlockWithElementHolder;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
-import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
-import eu.pb4.polymer.virtualentity.api.attachment.ChunkAttachment;
-import eu.pb4.polymer.virtualentity.api.attachment.HolderAttachment;
-import eu.pb4.polymer.virtualentity.api.elements.ItemDisplayElement;
+
 import eu.pb4.polymer.virtualentity.api.elements.TextDisplayElement;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.CustomModelDataComponent;
+
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.Brightness;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
-
-import static eu.pb4.polymer.common.impl.CommonImplUtils.id;
-import static net.minecraft.block.RedstoneOreBlock.LIT;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 
 public class CustomBlockTest extends BlockWithEntity implements FactoryBlock,BlockEntityProvider, BlockWithElementHolder, PolymerBlock, PolymerClientDecoded {
@@ -70,7 +51,7 @@ public class CustomBlockTest extends BlockWithEntity implements FactoryBlock,Blo
         if (world.getBlockEntity(pos) instanceof CustomBlockEntity be) {
             be.createGui((ServerPlayerEntity) player);
         }
-        return ActionResult.success(true);
+        return ActionResult.SUCCESS;
     }
 
     @Override
@@ -106,11 +87,7 @@ public class CustomBlockTest extends BlockWithEntity implements FactoryBlock,Blo
 //        super.scheduledTick(state, world, pos, random);
 //    }
 
-    @Override
-    public BlockState getPolymerBlockState(BlockState state) {
-        return Blocks.BARRIER.getDefaultState();
 
-    }
 
 
     @Nullable
@@ -139,7 +116,13 @@ public class CustomBlockTest extends BlockWithEntity implements FactoryBlock,Blo
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return world.isClient() ? null : validateTicker(type, CustomBlockList.CUSTOM_BLOCK_ENTITY, (CustomBlockEntity::tick));
-    }}
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        return Blocks.BARRIER.getDefaultState();
+    }
+}
 
 //    public static final class Model extends BlockModel {
 //        public static final ItemStack UNLIT = BaseItemProvider.requestModel(id("block/custom_block_test"));

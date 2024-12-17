@@ -14,9 +14,9 @@ public class CubeParticle {
     BlockPos pos;
     Vec3i size;
 
-    Vector3f color = new Vector3f(0.0f,1.0f,0.0f);
+
     float scale = 1f;
-    DustParticleEffect dustParticleEffect = new DustParticleEffect(color,scale);
+    DustParticleEffect dustParticleEffect = new DustParticleEffect(16711680    ,scale);
 
     public CubeParticle(ServerWorld world, Vec3d pos, Vec3i size) {
         this.world = world;

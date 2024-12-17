@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class DefaultBlock extends Block implements PolymerBlock, PolymerTexturedBlock {
     private final BlockState polymerBlockState;
@@ -18,12 +19,13 @@ public class DefaultBlock extends Block implements PolymerBlock, PolymerTextured
         super(settings);
         polymerBlockState = PolymerBlockResourceUtils.requestBlock(
                 type,
-                PolymerBlockModel.of(new Identifier(PeopleMineSeason5.MOD_ID, "block/" + modelId)));
+                PolymerBlockModel.of(Identifier.of(PeopleMineSeason5.MOD_ID, "block/" + modelId)));
     }
 
 
+
     @Override
-    public BlockState getPolymerBlockState(BlockState state) {
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
         return polymerBlockState;
     }
 

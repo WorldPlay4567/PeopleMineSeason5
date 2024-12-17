@@ -3,7 +3,7 @@ package com.example.blocks;
 import com.example.PeopleMineSeason5;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.core.api.block.PolymerBlockUtils;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.Block;
@@ -35,7 +35,7 @@ public class CustomBlockList {
     public static void init() {
 
         CUSTOM_BLOCK_ENTITY =
-                Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(PeopleMineSeason5.MOD_ID, "block/custom_block_test"),
+                Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(PeopleMineSeason5.MOD_ID, "custom_block_test"),
                         FabricBlockEntityTypeBuilder.create((pos, state) -> new CustomBlockEntity(CUSTOM_BLOCK_ENTITY,pos, state),
                                 CUSTOM_BLOCK).build(null));
 

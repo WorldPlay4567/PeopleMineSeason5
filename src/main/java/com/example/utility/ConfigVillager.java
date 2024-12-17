@@ -72,11 +72,11 @@ public class ConfigVillager {
             if(!Objects.equals(buy2, "minecraft:air")) {
                 gui.addTrade(
                         new TradeOffer(
-                             new TradedItem( Registries.ITEM.get(new Identifier(buy)), count),
+                             new TradedItem( Registries.ITEM.get(Identifier.of(buy)), count),
 
-                                Optional.of(new TradedItem( Registries.ITEM.get(new Identifier(buy2)), count2)),
+                                Optional.of(new TradedItem( Registries.ITEM.get(Identifier.of(buy2)), count2)),
 
-                        new GuiElementBuilder( Registries.ITEM.get(new Identifier(out)))
+                        new GuiElementBuilder( Registries.ITEM.get(Identifier.of(out)))
                             .setCount(outCount)
                             .asStack(),
                     9999,
@@ -87,8 +87,8 @@ public class ConfigVillager {
                 gui.addTrade(
                         new TradeOffer(
 
-                                new TradedItem( Registries.ITEM.get(new Identifier(buy)), count),
-                                new GuiElementBuilder(Registries.ITEM.get(new Identifier(out)))
+                                new TradedItem( Registries.ITEM.get(Identifier.of(buy)), count),
+                                new GuiElementBuilder(Registries.ITEM.get(Identifier.of(out)))
                                         .setCount(outCount)
                                         .asStack(),
                                 9999,

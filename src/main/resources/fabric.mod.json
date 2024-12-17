@@ -3,7 +3,7 @@
 	"id": "peoplemineseason5",
 	"version": "${version}",
 	"name": "PeopleMineSeason5",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "",
 	"authors": [
 		"Me!"
 	],
@@ -28,10 +28,10 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.20.6",
+		"minecraft": "~1.21.3",
 		"java": ">=21",
 		"fabric-api": "*",
-		"polymer-bundled": "0.8.0-pre.1+1.20.6"
+		"polymer-bundled": "0.10.2+1.21.3"
 	},
 	"suggests": {
 		"another-mod": "*"
