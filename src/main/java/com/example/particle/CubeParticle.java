@@ -15,6 +15,8 @@ public class CubeParticle {
     Vec3i size;
 
 
+
+
     float scale = 1f;
     DustParticleEffect dustParticleEffect = new DustParticleEffect(16711680    ,scale);
 
@@ -22,6 +24,8 @@ public class CubeParticle {
         this.world = world;
         this.pos = new BlockPos((int) pos.x, (int) pos.y, (int) pos.z);
         this.size = size;
+
+
     }
 
     public void draw() {
@@ -33,6 +37,7 @@ public class CubeParticle {
         drawLineY(pos.getX() + size.getX(), pos.getY(), pos.getZ() + size.getZ());
         drawLineZ(pos.getX() + size.getX(), pos.getY(), pos.getZ() );
 
+
         drawLineY(pos.getX(), pos.getY(), pos.getZ() + size.getZ());
         drawLineY(pos.getX() + size.getX(), pos.getY(), pos.getZ());
 
@@ -40,9 +45,12 @@ public class CubeParticle {
         drawLineY(pos.getX(), pos.getY() + size.getY(), pos.getZ());
         drawLineZ(pos.getX(), pos.getY() + size.getY(), pos.getZ());
 
+
         drawLineX(pos.getX(), pos.getY()+ size.getY(), pos.getZ() + size.getZ());
         drawLineZ(pos.getX() + size.getX(), pos.getY()+ size.getY(), pos.getZ());
     }
+
+
 
     public void drawLineX(int X, int Y, int Z) {
         for(int x = 0; x <= size.getX(); x++) {
@@ -59,7 +67,5 @@ public class CubeParticle {
             world.spawnParticles(dustParticleEffect, X, Y, Z + z, 0, 0, 0,0,0);
         }
     }
-
-
 
 }

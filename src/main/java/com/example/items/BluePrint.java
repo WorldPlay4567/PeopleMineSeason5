@@ -3,6 +3,7 @@ package com.example.items;
 
 import com.example.PeopleMineSeason5;
 import com.example.particle.CubeParticle;
+import com.example.utility.build.BuildManager;
 import com.example.utility.build.PlaceBuild;
 import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -20,10 +21,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.structure.StructureContext;
-import net.minecraft.structure.StructurePiecesList;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.StructureTemplate;
+import net.minecraft.structure.*;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
@@ -36,6 +34,7 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 public class BluePrint extends Item implements PolymerItem {
@@ -85,8 +84,11 @@ public class BluePrint extends Item implements PolymerItem {
 
 //                    structurePlacerAPI.loadStructure();
 
+
                         PlaceBuild placeBuild = new PlaceBuild(pos,identifier.getPath(),(ServerWorld) playerEntity.getWorld(), (ServerPlayerEntity) playerEntity);
-                        placeBuild.place();
+                        BuildManager.addPlaceBuild(placeBuild);
+
+
 
                     serverWorld.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, SoundCategory.PLAYERS, 1,1);
                     serverWorld.spawnParticles(ParticleTypes.CLOUD, pos.getX(),pos.getY(),pos.getZ(), 300, 5, 5,5,0);

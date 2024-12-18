@@ -93,7 +93,7 @@ public class BuildStructure {
     public static NbtCompound getStructure(String structureName) {
 
         try {
-        Identifier id = Identifier.of("peoplemineseason5", "structures/" + structureName + ".nbt");
+        Identifier id = Identifier.of("peoplemineseason5", "structure/" + structureName + ".nbt");
 
         Optional<Resource> resource = resourceManager.getResource(id);
 

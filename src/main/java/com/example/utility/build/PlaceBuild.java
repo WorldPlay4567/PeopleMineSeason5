@@ -1,6 +1,5 @@
 package com.example.utility.build;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -26,6 +25,8 @@ public class PlaceBuild {
     private final ServerWorld world;
     private int currentIndex = 0;
     private ServerPlayerEntity serverPlayer;
+    private boolean isPlace = false;
+    private int tick;
 
     public PlaceBuild(BlockPos blockPos, String name, ServerWorld world, ServerPlayerEntity serverPlayer){
         this.structurePos = blockPos;
@@ -37,10 +38,8 @@ public class PlaceBuild {
     }
 
     public void place() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+
+        if(!isPlace) {
                 if(currentIndex < blockList.size()) {
 
                    BuildBlock block = blockList.get(currentIndex);
@@ -50,7 +49,7 @@ public class PlaceBuild {
                            structurePos.getY() + block.getBlockPos().getY(),
                            structurePos.getZ() + block.getBlockPos().getZ()
                    );
-                    placeBlock(blockPos, block.getBlockState());
+                    this.placeBlock(blockPos, block.getBlockState());
                    currentIndex++;
                 } else {
 
@@ -75,16 +74,22 @@ public class PlaceBuild {
                             }
                         });
                     }
-
-                    timer.cancel();
-                    isPlace(structurePos);
+                    isPlace = true;
+                    this.isPlace(structurePos);
                 }
-
-            }
-        }, 0, 5); // 1000 мс = 1 секунда
+        }
     }
 
-    public void placeBlock(BlockPos blockPos, BlockState blockState) {
+
+
+
+
+    private void isPlace(BlockPos blockPos) {
+        world.playSound(null, blockPos.getX(),blockPos.getY(),blockPos.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 120f, 1f);
+        serverPlayer.sendMessage(Text.literal("==========================\n Постройка завершена \n=========================="));
+    }
+
+    private void placeBlock(BlockPos blockPos, BlockState blockState) {
         world.setBlockState(blockPos,blockState);
         if(blockState.getBlock() != Blocks.AIR) {
             world.playSound(null, blockPos.getX(),blockPos.getY(),blockPos.getZ(), blockState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS);
@@ -92,10 +97,8 @@ public class PlaceBuild {
         }
     }
 
-    public void isPlace(BlockPos blockPos) {
-        world.playSound(null, blockPos.getX(),blockPos.getY(),blockPos.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 120f, 1f);
-        serverPlayer.sendMessage(Text.literal("==========================\n Постройка завершена \n=========================="));
+    public boolean isPlace() {
+        return isPlace;
     }
-
 }
 

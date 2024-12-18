@@ -74,7 +74,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 
 
-
+		BuildManager.start();
 		ConfigVillagerRegister.init();
 
 		LOGGER.info("=====================");
@@ -213,6 +213,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 //		});
 
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
+//			BuildManager.tick();
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			for (ServerPlayerEntity player : players) {
 				BluePrint.tick(player);
