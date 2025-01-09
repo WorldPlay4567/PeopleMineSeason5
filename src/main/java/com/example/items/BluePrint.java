@@ -34,7 +34,6 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 public class BluePrint extends Item implements PolymerItem {

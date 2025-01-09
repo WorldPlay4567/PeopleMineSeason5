@@ -9,6 +9,9 @@ import com.example.utility.CalendarChest;
 import com.example.utility.ConfigVillagerRegister;
 import com.example.utility.build.*;
 import com.mojang.brigadier.context.CommandContext;
+import de.tomalbrc.bil.core.model.Model;
+import de.tomalbrc.bil.file.loader.AjModelLoader;
+import de.tomalbrc.bil.file.loader.BbModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.sgui.api.GuiHelpers;
 import net.fabricmc.api.ModInitializer;
@@ -60,7 +63,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private final Map<UUID, ArmorStandEntity> playerArmorStands = new HashMap<>();
 
-
+	public static final Model MODEL_FROM_ID = AjModelLoader.load(Identifier.of("peoplemineseason5","test"));
+//	public static final Model MODEL_FROM_FILEPATH = BbModelLoader.load("model/peoplemineseason5/test.ajmodel");
 
 
 
@@ -71,6 +75,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		PolymerResourcePackUtils.addModAssets("space");
 		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "item"));
 		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "block"));
+
 
 
 
@@ -248,23 +253,27 @@ public class PeopleMineSeason5 implements ModInitializer {
 		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
 //		ConfigVillagerRegister.init();
 		ServerPlayerEntity serverPlayer = serverCommandSourceCommandContext.getSource().getPlayer();
-		ArrayList<BuildBlock> buildBlocks = BuildStructure.getBuild("shop_stone");
-			ServerWorld serverWorld = serverPlayer.getServer().getOverworld();
-
-			for(BuildBlock block : buildBlocks) {
-
-				BlockPos blockPos = serverPlayer.getBlockPos();
-				BlockPos original = new BlockPos(
-						blockPos.getX() + block.getBlockPos().getX(),
-						blockPos.getY() + block.getBlockPos().getY(),
-						blockPos.getZ() + block.getBlockPos().getZ()
-                        );
-
-				serverWorld.setBlockState(original,block.getBlockState());
-			}
-			return 1;
+		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal(" Test : " +  SaveStructure.getStructureState(serverPlayer.getServer()).getAllString()));
 
 
+		System.out.println();
+//		ArrayList<BuildBlock> buildBlocks = BuildStructure.getBuild("shop_stone");
+//			ServerWorld serverWorld = serverPlayer.getServer().getOverworld();
+//
+//			for(BuildBlock block : buildBlocks) {
+//
+//				BlockPos blockPos = serverPlayer.getBlockPos();
+//				BlockPos original = new BlockPos(
+//						blockPos.getX() + block.getBlockPos().getX(),
+//						blockPos.getY() + block.getBlockPos().getY(),
+//						blockPos.getZ() + block.getBlockPos().getZ()
+//                        );
+//
+//				serverWorld.setBlockState(original,block.getBlockState());
+//			}
+//			return 1;
+//
+		return 0;
     }
 
 	private Vec3d getPlayerShoulderPosition(ServerPlayerEntity player) {

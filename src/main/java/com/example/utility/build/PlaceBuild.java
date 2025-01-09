@@ -52,7 +52,6 @@ public class PlaceBuild {
                     this.placeBlock(blockPos, block.getBlockState());
                    currentIndex++;
                 } else {
-
                     for(BuildEntity entity: buildEntities) {
                         Optional<EntityType<?>> entityType = entity.getEntityType();
                         entityType.ifPresent(type -> {
@@ -64,7 +63,6 @@ public class PlaceBuild {
                                         structurePos.getY() + entity.getEntityPos().y,
                                         structurePos.getZ() + entity.getEntityPos().z
                                 );
-
                                 entity1.readNbt(entity.getNbtEntity().getCompound("nbt"));
                                 entity1.setUuid(UUID.randomUUID());
                                 entity1.setPosition(vec3d);
@@ -85,6 +83,7 @@ public class PlaceBuild {
 
 
     private void isPlace(BlockPos blockPos) {
+        SaveStructure.getStructureState(world.getServer()).addCoordinate(Vec3d.of(structurePos));
         world.playSound(null, blockPos.getX(),blockPos.getY(),blockPos.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 120f, 1f);
         serverPlayer.sendMessage(Text.literal("==========================\n Постройка завершена \n=========================="));
     }

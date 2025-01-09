@@ -30,6 +30,10 @@
 		"fabricloader": ">=0.15.11",
 		"minecraft": "~1.21.3",
 		"java": ">=21",
+		"polymer-core": "*",
+		"polymer-networking": "*",
+		"polymer-virtual-entity": "*",
+		"polymer-resource-pack": "*",
 		"fabric-api": "*",
 		"polymer-bundled": "0.10.2+1.21.3"
 	},
