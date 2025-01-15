@@ -3,8 +3,8 @@ package com.worldplay.items;
 
 import com.worldplay.PeopleMineSeason5;
 import com.worldplay.particle.CubeParticle;
-import com.worldplay.utility.build.BuildManager;
-import com.worldplay.utility.build.PlaceBuild;
+import com.worldplay.utility.builds.BuildManager;
+import com.worldplay.utility.builds.PlaceBuild;
 import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;

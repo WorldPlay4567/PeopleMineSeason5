@@ -6,7 +6,7 @@ import com.worldplay.blocks.CustomBlockList;
 import com.worldplay.items.BluePrint;
 import com.worldplay.items.ItemsInit;
 import com.worldplay.utility.ConfigVillagerRegister;
-import com.worldplay.utility.build.*;
+import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
 import de.tomalbrc.bil.core.model.Model;
 import de.tomalbrc.bil.file.loader.AjModelLoader;
