@@ -2,8 +2,8 @@ package com.worldplay.mixin;
 
 import com.worldplay.utility.ConfigVillager;
 import com.worldplay.utility.ConfigVillagerRegister;
-import com.worldplay.utility.build.BuildCrafting;
-import com.worldplay.utility.build.update.UpdateGui;
+import com.worldplay.utility.builds.BuildCrafting;
+import com.worldplay.utility.builds.update.UpdateGui;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
