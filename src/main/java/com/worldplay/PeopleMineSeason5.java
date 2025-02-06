@@ -11,6 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import de.tomalbrc.bil.core.model.Model;
 import de.tomalbrc.bil.file.loader.AjModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import eu.pb4.sgui.api.GuiHelpers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -18,6 +19,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -38,17 +40,28 @@ import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-
+import java.util.concurrent.CopyOnWriteArrayList;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
+import net.minecraft.util.Identifier;
+import org.apache.commons.io.IOUtils;
 
 public class PeopleMineSeason5 implements ModInitializer {
 
 	public static final  String MOD_ID = "peoplemineseason5";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private final Map<UUID, ArmorStandEntity> playerArmorStands = new HashMap<>();
-
+	public static Iterable<ServerPlayerEntity> players;
 	public static final Model MODEL_FROM_ID = AjModelLoader.load(Identifier.of("peoplemineseason5","test"));
 //	public static final Model MODEL_FROM_FILEPATH = BbModelLoader.load("model/peoplemineseason5/test.ajmodel");
 
@@ -59,11 +72,41 @@ public class PeopleMineSeason5 implements ModInitializer {
 		PolymerResourcePackUtils.addModAssets(PeopleMineSeason5.MOD_ID);
 		PolymerResourcePackUtils.addModAssets("minecraft");
 		PolymerResourcePackUtils.addModAssets("space");
-		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "item"));
-		PolymerResourcePackUtils.addBridgedModelsFolder(Identifier.of("peoplemineseason5", "block"));
+		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "item"));
+		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"));
 
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 
+			@Override
+			public Identifier getFabricId() {
+				// Уникальный идентификатор вашего слушателя
+				return Identifier.of(MOD_ID, "villager_trade");
+			}
 
+			@Override
+			public void reload(ResourceManager manager) {
+				// Укажите путь к файлу относительно папки data/<namespace>/...
+				Identifier fileId = Identifier.of(MOD_ID, "villager_trade/villager_trade.json");
+
+				try {
+					// Пытаемся получить ресурс из datapack'а
+					Optional<Resource> resource = manager.getResource(fileId);
+					if (resource.isPresent()) {
+						try (InputStream stream = resource.get().getInputStream()) {
+							// Читаем содержимое файла (например, как строку)
+							String content = IOUtils.toString(stream, StandardCharsets.UTF_8);
+							// Обрабатываем содержимое файла (здесь просто вывод в консоль)
+							System.out.println("Содержимое файла " + fileId + ":");
+							System.out.println(content);
+						}
+					} else {
+						System.out.println("Файл не найден: " + fileId);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		BuildManager.start();
 		ConfigVillagerRegister.init();
@@ -79,6 +122,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));
 		});
+
 
 
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
@@ -206,9 +250,12 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 //			BuildManager.tick();
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
+			this.players = server.getPlayerManager().getPlayerList();
+
 			for (ServerPlayerEntity player : players) {
 				BluePrint.tick(player);
 			}
+			BuildManager.tickParticle(server);
 
 		});
 
@@ -236,7 +283,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal("Все конфиги перезагружены"));
 //		ConfigVillagerRegister.init();
 		ServerPlayerEntity serverPlayer = serverCommandSourceCommandContext.getSource().getPlayer();
-		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal(" Test : " +  SaveStructure.getStructureState(serverPlayer.getServer()).getAllString()));
+//		serverCommandSourceCommandContext.getSource().sendMessage(Text.literal(" Test : " +  SaveStructure.getStructureState(serverPlayer.getServer()).getAllString()));
 
 		System.out.println();
 //		ArrayList<BuildBlock> buildBlocks = BuildStructure.getBuild("shop_stone");

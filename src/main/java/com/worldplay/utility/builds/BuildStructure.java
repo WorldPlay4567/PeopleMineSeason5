@@ -22,7 +22,7 @@ public class BuildStructure {
     public static void load(MinecraftServer server, ServerWorld world) {
 
         resourceManager = server.getResourceManager();
-        System.out.println(getBuild("shop_stone"));
+//        System.out.println(getBuild("shop_stone"));
     }
 
     public static ArrayList<BuildEntity> getEntityBuild(String structureName) {

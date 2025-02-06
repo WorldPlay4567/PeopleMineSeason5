@@ -2,11 +2,14 @@
 package com.worldplay.items;
 
 import com.worldplay.PeopleMineSeason5;
+import com.worldplay.api.RPFast;
 import com.worldplay.particle.CubeParticle;
 import com.worldplay.utility.builds.BuildManager;
 import com.worldplay.utility.builds.PlaceBuild;
 import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.core.api.item.SimplePolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;
 
 import net.minecraft.component.DataComponentTypes;
@@ -35,15 +38,17 @@ import xyz.nucleoid.packettweaker.PacketContext;
 import java.util.List;
 import java.util.Objects;
 
-
+////
+/////give @s peoplemineseason5:blue_print[minecraft:custom_data={"structure":"peoplemineseason5:market_1"}]
+///
 public class BluePrint extends Item implements PolymerItem {
     private static int tick;
-
+    Identifier polymerModel;
     //    private final PolymerModelData modelData = PolymerResourcePackUtils.requestModel(Items.PAPER, new Identifier(PeopleMineSeason5.MOD_ID, "item/blue_print"));
     public BluePrint(Settings settings, String modelId) {
         super(settings);
-        Identifier polymerModel = PolymerResourcePackUtils.getBridgedModelId(Identifier.of(PeopleMineSeason5.MOD_ID, modelId));
-
+        this.polymerModel = RPFast.getItemModel(modelId);
+        System.out.println("\n THIASIODMASDOMASDO" + this.polymerModel);
     }
 
     @Override
@@ -156,8 +161,9 @@ public class BluePrint extends Item implements PolymerItem {
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of("peoplemineseason5","blue_print");
+        return this.polymerModel;
     }
+
 }
 
 

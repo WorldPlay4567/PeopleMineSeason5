@@ -8,6 +8,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
@@ -18,7 +19,8 @@ public class DefaultItemBlock extends BlockItem implements PolymerItem {
 
     public DefaultItemBlock(Item.Settings settings, Block block, String modelId) {
         super(block, settings);
-        this.polymerModel = PolymerResourcePackUtils.getBridgedModelId(Identifier.of(PeopleMineSeason5.MOD_ID, "block/" + modelId));
+
+        this.polymerModel = Identifier.of(PeopleMineSeason5.MOD_ID, "block/" + modelId);
         System.out.print(polymerModel + " | ");
 
     }

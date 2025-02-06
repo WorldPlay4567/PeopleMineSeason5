@@ -201,8 +201,8 @@
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
-			"rotation": [0, -154, 0],
-			"translation": [2.5, 7.25, 0.5]
+			"rotation": [2, -90, 2],
+			"translation": [-6.25, 7.5, -3.5]
 		}
 	},
 	"groups": [
@@ -210,13 +210,11 @@
 			"name": "group",
 			"origin": [9.99137, 5, 4.43415],
 			"color": 0,
-			"nbt": "{}",
 			"children": [
 				{
 					"name": "group",
 					"origin": [9.99137, 5, 4.43415],
 					"color": 0,
-					"nbt": "{}",
 					"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 				}
 			]

@@ -1,0 +1,19 @@
+{
+	"model": {
+		"type": "minecraft:composite",
+		"models": [
+			{
+				"type": "minecraft:model",
+				"model": "minecraft:item/cup_coffee"
+			},
+			{
+				"type": "minecraft:special",
+				"base": "minecraft:item/right_hand2",
+				"model": {
+				    "type": "minecraft:head",
+				    "kind": "player"
+				}
+			}
+		]
+	}
+}

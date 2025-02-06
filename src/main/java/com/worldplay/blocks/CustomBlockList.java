@@ -16,15 +16,7 @@ public class CustomBlockList {
 
 //    public static final Block CustomBlockTest = Blocks.register(String.valueOf(Identifier.of(PeopleMineSeason5.MOD_ID, "custom_block_test"));
 
-
     public static BlockEntityType<CustomBlockEntity> CUSTOM_BLOCK_ENTITY;
-
-
-
-
-
-
-
 
     public static void init() {
 

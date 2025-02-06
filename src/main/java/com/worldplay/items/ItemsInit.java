@@ -2,11 +2,15 @@ package com.worldplay.items;
 
 import com.worldplay.PeopleMineSeason5;
 
+import com.worldplay.blocks.DefaultBlock;
 import com.worldplay.blocks.DefaultItemBlock;
+import eu.pb4.polymer.core.api.block.SimplePolymerBlock;
 import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-
+import java.util.function.Function;
+import net.minecraft.block.PumpkinBlock;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -21,10 +25,15 @@ import net.minecraft.util.Rarity;
 //.registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"blue_print")))
 public class ItemsInit {
     public static final Item BLUE_PRINT = registerItem("blue_print",new BluePrint(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"blue_print"))).fireproof().rarity(Rarity.EPIC).maxCount(64), "blue_print"));
+
+    public static final Item CUP_COFFEE = registerItem("cup_coffee",new CupCoffee(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"cup_coffee"))).fireproof().rarity(Rarity.EPIC).maxCount(64)));
+
     public static final Item TREMBLING_CRYSTAL = registerItem("trembling_crystal",new TremblingCrystal(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"trembling_crystal"))).fireproof().rarity(Rarity.EPIC), "trembling_crystal"));
 
     public static final Item CARROTS_SEEDS_ITEM = registerItem("carrots_seeds",new DefaultItem(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"carrots_seeds_item"))).fireproof().rarity(Rarity.EPIC), Items.CARROT, "carrots_seeds"));
     public static final BlockItem CARROTS_SEEDS = new AliasedBlockItemPolymer(Blocks.CARROTS,new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"carrots_seeds"))).component(DataComponentTypes.CUSTOM_NAME,Text.translatable("item.peoplemineseason5.carrots_seeds").setStyle(Style.EMPTY.withItalic(false).withColor(Formatting.GREEN))),CARROTS_SEEDS_ITEM, "carrots_seeds");
+
+
 
 
     public static final Item EVGINES_SWORD = registerItem("evgines_sword",new DefaultItem(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,"evgines_sword"))).fireproof().rarity(Rarity.EPIC), Items.DIAMOND_SWORD, "evgines_sword"));
@@ -37,6 +46,7 @@ public class ItemsInit {
                         entries.add(ItemsInit.TREMBLING_CRYSTAL);
 
                     })).build());
+
 
 
 

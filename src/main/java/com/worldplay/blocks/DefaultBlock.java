@@ -20,6 +20,12 @@ public class DefaultBlock extends Block implements PolymerBlock, PolymerTextured
                 PolymerBlockModel.of(Identifier.of(PeopleMineSeason5.MOD_ID, "block/" + modelId)));
     }
 
+    public DefaultBlock(Settings aNull) {
+        super(aNull);
+        polymerBlockState = PolymerBlockResourceUtils.requestBlock(
+                null,
+                PolymerBlockModel.of(Identifier.of(PeopleMineSeason5.MOD_ID, "block/" + null)));
+    }
 
 
     @Override

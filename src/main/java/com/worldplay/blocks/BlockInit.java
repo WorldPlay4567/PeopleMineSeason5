@@ -1,16 +1,19 @@
 package com.worldplay.blocks;
 
 import com.worldplay.PeopleMineSeason5;
+import com.worldplay.items.CupCoffee;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 
 import static net.minecraft.registry.Registries.BLOCK;
@@ -18,6 +21,8 @@ import static net.minecraft.registry.Registries.BLOCK;
 public class BlockInit {
 
     public static final Block CUSTOM_BLOCK = registerOld(BlockModelType.TRANSPARENT_BLOCK, "custom_block_test");
+
+
 
     public static final Block NEWS = register("news", new News(Block.Settings.copy(Blocks.OAK_PLANKS)
             .registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of(PeopleMineSeason5.MOD_ID,"news")))
@@ -36,6 +41,11 @@ public class BlockInit {
             .copy(Blocks.DIAMOND_BLOCK)
             .registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of(PeopleMineSeason5.MOD_ID,"cat"))),
             BlockModelType.TRANSPARENT_BLOCK,"cat"));
+
+//    public static final Item CUP_COFFEE = Items.register(Blocks.PLAYER_HEAD, (block, settings) -> {
+//        return new CupCoffee(block, Blocks.PLAYER_WALL_HEAD, settings);
+//    });
+
 
 //    public static final Block ANVIL_BLOCK = Registry.register(BLOCK, Identifier.of("minecraft","anvil"),new AnvilBlockRemake(Block.Settings.copy(Blocks.ANVIL).registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of("minecraft","anvil")))));
 

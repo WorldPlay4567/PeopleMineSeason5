@@ -20,6 +20,7 @@ repositories {
 			includeGroup "maven.modrinth"
 		}
 	}
+	mavenCentral()
 
 
 	// Add repositories to retrieve artifacts from in here.
@@ -35,7 +36,6 @@ loom {
 	mods {
 		"peoplemineseason5" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 
@@ -53,12 +53,17 @@ dependencies {
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-blocks:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
+	modImplementation include("eu.pb4:polymer-resource-pack-extras:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-networking:${project.polymer_version}")
-	modImplementation include("eu.pb4:sgui:1.7.2+1.21.2")
+	modImplementation include("eu.pb4:sgui:1.8.2+1.21.4")
+
 	modImplementation include("eu.pb4:polymer-virtual-entity:${project.polymer_version}")
-	modImplementation include("eu.pb4:factorytools:0.4.1+1.21.3")
+	modImplementation include("eu.pb4:factorytools:0.5.0+1.21.4")
 	modImplementation include("maven.modrinth:structureplacerapi:1.1.0")
 
+	compileOnly("io.github.toxicity188:BetterHud-standard-api:1.11.4") //Standard api
+	modCompileOnly("io.github.toxicity188:BetterHud-fabric-api:1.11.4") //Platform api
+	compileOnly("io.github.toxicity188:BetterCommand:1.4.2") //BetterCommand library
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"

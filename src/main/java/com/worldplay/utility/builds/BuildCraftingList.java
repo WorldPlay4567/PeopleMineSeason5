@@ -21,7 +21,7 @@ public class BuildCraftingList {
             Path worldDir = server.getSavePath(WorldSavePath.ROOT);
 
             // Формируем путь к файлу внутри этой папки
-            logFilePath = worldDir.resolve("build_progress.txt");
+            logFilePath = worldDir.resolve("build_progress.json");
 
             // Убедимся, что директория существует
             if (!Files.exists(worldDir)) {
