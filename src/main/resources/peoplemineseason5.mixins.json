@@ -3,8 +3,9 @@
   "package": "com.worldplay.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "VillagerMixin",
-    "AnvilBlockMixin"
+    "AnvilBlockMixin",
+    "MinecraftServerMixin",
+    "VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

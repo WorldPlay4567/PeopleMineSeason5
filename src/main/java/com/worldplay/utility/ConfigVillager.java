@@ -99,7 +99,6 @@ public class ConfigVillager {
         }
     }
 
-
     public void setBuyMoney(int i) {
         JsonArray jsonArray = config.getAsJsonArray(NAME);
         JsonElement jsonElement = jsonArray.get(i);
@@ -112,7 +111,6 @@ public class ConfigVillager {
         } else {
             trade.addProperty("count", trade.get("count").getAsInt() + buyMultiplier);
         }
-
     }
     void saveConfig() {
         try (FileWriter writer = new FileWriter(CONFIG_PATH + NAME + ".json")) {

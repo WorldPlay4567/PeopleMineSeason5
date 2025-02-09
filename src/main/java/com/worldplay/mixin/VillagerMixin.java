@@ -4,6 +4,7 @@ import com.worldplay.utility.ConfigVillager;
 import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.BuildCrafting;
 import com.worldplay.utility.builds.update.UpdateGui;
+import com.worldplay.utility.villager.VillagerGui;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +40,8 @@ public abstract class VillagerMixin {
 		}
 
 		if (villager.hasCustomName() && "Каменщик".equals(villager.getCustomName().getString())) {
-			test7((ServerPlayerEntity) player, ConfigVillagerRegister.STONE);
+			VillagerGui villagerGui = new VillagerGui((ServerPlayerEntity) player, "stone");
+//			test7((ServerPlayerEntity) player, ConfigVillagerRegister.STONE);
 			cir.setReturnValue(ActionResult.FAIL);
 		}
 		if (villager.hasCustomName() && "Фермер".equals(villager.getCustomName().getString())) {
@@ -70,15 +72,15 @@ public abstract class VillagerMixin {
 					}
 
 				}
+
 				@Override
 				public void setExperience(int experience) {
-
+					System.out.println("exp : " + experience);
 				}
-
 
 				@Override
 				public boolean onTrade(TradeOffer offer) {
-
+					System.out.println("BUY : " + this.getExperience());
 					int i = this.getOfferIndex(offer);
 //					ConfigVillager.setBuyMoney(i, "stone");
 					configVillager.setBuyMoney(i);
@@ -86,6 +88,12 @@ public abstract class VillagerMixin {
 					return true;
 				}
 
+
+				@Override
+				public void onClose() {
+					super.onClose();
+					System.out.println("TEST EXP GET : " + this.getExperience());
+				}
 			};
 
 			gui.setTitle(Text.literal("Продавец камня"));

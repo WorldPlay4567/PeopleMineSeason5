@@ -8,6 +8,8 @@ import com.worldplay.items.ItemsInit;
 import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
+
+import com.worldplay.utility.villager.VillagerShopList;
 import de.tomalbrc.bil.core.model.Model;
 import de.tomalbrc.bil.file.loader.AjModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -75,39 +77,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "item"));
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"));
 
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 
-			@Override
-			public Identifier getFabricId() {
-				// Уникальный идентификатор вашего слушателя
-				return Identifier.of(MOD_ID, "villager_trade");
-			}
-
-			@Override
-			public void reload(ResourceManager manager) {
-				// Укажите путь к файлу относительно папки data/<namespace>/...
-				Identifier fileId = Identifier.of(MOD_ID, "villager_trade/villager_trade.json");
-
-				try {
-					// Пытаемся получить ресурс из datapack'а
-					Optional<Resource> resource = manager.getResource(fileId);
-					if (resource.isPresent()) {
-						try (InputStream stream = resource.get().getInputStream()) {
-							// Читаем содержимое файла (например, как строку)
-							String content = IOUtils.toString(stream, StandardCharsets.UTF_8);
-							// Обрабатываем содержимое файла (здесь просто вывод в консоль)
-							System.out.println("Содержимое файла " + fileId + ":");
-							System.out.println(content);
-						}
-					} else {
-						System.out.println("Файл не найден: " + fileId);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
+		VillagerShopList.init();
 		BuildManager.start();
 		ConfigVillagerRegister.init();
 
@@ -127,6 +98,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
 			ConfigVillagerRegister.save();
+			VillagerShopList.save();
 		});
 		ServerWorldEvents.LOAD.register(BuildStructure::load);
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
