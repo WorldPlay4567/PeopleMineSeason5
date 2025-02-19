@@ -1,10 +1,15 @@
 package com.worldplay;
 
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.worldplay.blocks.BlockInit;
 import com.worldplay.blocks.CustomBlockList;
+import com.worldplay.chat.ChatCord;
+import com.worldplay.chat.CordCommand;
 import com.worldplay.items.BluePrint;
 import com.worldplay.items.ItemsInit;
+import com.worldplay.test.Tesst;
 import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,6 +20,7 @@ import de.tomalbrc.bil.file.loader.AjModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import eu.pb4.sgui.api.GuiHelpers;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -26,18 +32,27 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.map.MapDecorationTypes;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.registry.tag.EnchantmentTags;
+import net.minecraft.registry.tag.StructureTags;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.village.TradeOffers;
+import net.minecraft.village.VillagerProfession;
+import net.minecraft.village.VillagerType;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +60,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -77,7 +89,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "item"));
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"));
 
-
+		CordCommand.init();
+		ChatCord.init();
 		VillagerShopList.init();
 		BuildManager.start();
 		ConfigVillagerRegister.init();
@@ -223,9 +236,12 @@ public class PeopleMineSeason5 implements ModInitializer {
 //			BuildManager.tick();
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			this.players = server.getPlayerManager().getPlayerList();
+			Tesst.init(server);
 
 			for (ServerPlayerEntity player : players) {
 				BluePrint.tick(player);
+
+				player.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
 			}
 			BuildManager.tickParticle(server);
 

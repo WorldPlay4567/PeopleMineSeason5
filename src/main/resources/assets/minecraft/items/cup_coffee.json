@@ -8,10 +8,18 @@
 			},
 			{
 				"type": "minecraft:special",
-				"base": "minecraft:item/right_hand2",
+				"base": "minecraft:item/left_hand2",
 				"model": {
 				    "type": "minecraft:head",
 				    "kind": "player"
+				}
+			},
+			{
+				"type": "minecraft:special",
+				"base": "minecraft:item/right_hand2",
+				"model": {
+					"type": "minecraft:head",
+					"kind": "player"
 				}
 			}
 		]

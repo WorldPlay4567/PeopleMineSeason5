@@ -35,17 +35,17 @@ out vec4 corner1;
 const ivec4 armUV[] = ivec4[](
     ivec4(40, 52, 36, 64), // Front
     ivec4(44, 64, 48, 52), // Back
-    ivec4(36, 64, 32, 52), // Outer Side
+    ivec4(36, 52, 32, 64), // Outer Side
     ivec4(44, 52, 40, 48), // Bottom
-    ivec4(40, 52, 44, 64), // Inner Side
+    ivec4(40, 64, 44, 52), // Inner Side
     ivec4(36, 52, 40, 48)  // Top
 );
 const ivec4 slimArmUV[] = ivec4[]( // 40 -> 39 ; 48 -> 46 ; 44 -> 43
     ivec4(39, 52, 36, 64), // Front
     ivec4(43, 64, 46, 52), // Back
-    ivec4(36, 64, 32, 52), // Outer Side
+    ivec4(36, 52, 32, 64), // Outer Side
     ivec4(42, 52, 39, 48), // Bottom
-    ivec4(39, 52, 43, 64), // Inner Side
+    ivec4(39, 64, 43, 52), // Inner Side
     ivec4(36, 52, 39, 48)  // Top
 );
 const bool armRotateUV[] = bool[](

@@ -27,6 +27,13 @@
 			"ascent": 67,
 			"height": 258,
 			"chars": ["\u0009"]
+		}		,
+		{
+			"type": "bitmap",
+			"file": "peoplemineseason5:font/villager.png",
+			"ascent": 13,
+			"height": 256,
+			"chars": ["\u0010"]
 		}
 	]
 

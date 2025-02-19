@@ -8,9 +8,9 @@
 			"scale": [0, 0, 0]
 		},
 		"firstperson_righthand": {
-			"rotation": [180, -22.5, 180],
-			"translation": [-1, 5.275, 0.4666],
-			"scale": [0.471, 0.515, 1.515]
+			"rotation": [-153.26, -31.76, -165.12],
+			"translation": [7.75, 1.8414, -4.1882],
+			"scale": [0, 0, 0]
 		},
 		"ground": {
 			"scale": [0, 0, 0]

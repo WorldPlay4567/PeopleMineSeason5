@@ -5,6 +5,7 @@
   "mixins": [
     "AnvilBlockMixin",
     "MinecraftServerMixin",
+    "Test",
     "VillagerMixin"
   ],
   "injectors": {

@@ -1,5 +1,6 @@
 package com.worldplay.utility.builds;
 
+import com.worldplay.items.AliasedBlockItemPolymer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.*;
@@ -10,6 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap;
 
 import java.io.InputStream;
 import java.util.ArrayList;

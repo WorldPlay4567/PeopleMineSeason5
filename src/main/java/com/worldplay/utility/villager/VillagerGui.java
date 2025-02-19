@@ -4,6 +4,8 @@ import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 
@@ -18,14 +20,18 @@ public class VillagerGui extends MerchantGui {
         super(player, false);
         this.name = name;
         villagerShop = VillagerShopList.getVillagerShop(name);
+        this.setTitle(Text.literal("")
+                .append(Text.translatable("space.-470").styled(style -> style.withFont(Identifier.of("space","default"))))
+                .append(Text.literal("\u0010").styled(style -> style.withFont(Identifier.of("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
         openGui();
+
     }
 
     public void openGui() {
         if(isOpen()) {
             this.merchant.getOffers().clear();
-            this.sendUpdate();
         }
+
         for(int i = 0; i < villagerShop.getTradeSize(); i++) {
             this.addTrade(villagerShop.getTrade(i));
         }
