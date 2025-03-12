@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class CustomBlockEntity extends BlockEntity implements MinimalSidedInventory {
     private final DefaultedList<ItemStack> items = DefaultedList.ofSize(25, ItemStack.EMPTY);
-    private static final int[] SLOTS = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+    private final int[] SLOTS = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
     public int time = 0;
 
 
@@ -51,6 +51,7 @@ public class CustomBlockEntity extends BlockEntity implements MinimalSidedInvent
     public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
 
         var self = (CustomBlockEntity) t;
+
 
         self.time ++;
         self.markDirty();

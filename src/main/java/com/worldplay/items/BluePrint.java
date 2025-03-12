@@ -10,6 +10,7 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.item.SimplePolymerItem;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
+import kr.toxicity.hud.api.BetterHud;
 import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;
 
 import net.minecraft.component.DataComponentTypes;
@@ -127,9 +128,6 @@ public class BluePrint extends Item implements PolymerItem {
             NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
             if (nbtComponent != null) {
                 NbtCompound nbtCompound = nbtComponent.copyNbt();
-
-
-
 
             if (nbtCompound.get("structure") == null) {
                 String message = "Чертеж пустой";

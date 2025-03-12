@@ -1,8 +1,9 @@
 package com.worldplay;
 
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.worldplay.blocks.BlockInit;
 import com.worldplay.blocks.CustomBlockList;
 import com.worldplay.chat.ChatCord;
@@ -20,55 +21,35 @@ import de.tomalbrc.bil.file.loader.AjModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import eu.pb4.sgui.api.GuiHelpers;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.map.MapDecorationTypes;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
-import net.minecraft.registry.tag.EnchantmentTags;
-import net.minecraft.registry.tag.StructureTags;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.village.TradeOffers;
-import net.minecraft.village.VillagerProfession;
-import net.minecraft.village.VillagerType;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
-import org.apache.commons.io.IOUtils;
+
 
 public class PeopleMineSeason5 implements ModInitializer {
 
@@ -107,13 +88,16 @@ public class PeopleMineSeason5 implements ModInitializer {
 					.executes(PeopleMineSeason5::reload));
 		});
 
-
-
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
 			ConfigVillagerRegister.save();
 			VillagerShopList.save();
 		});
-		ServerWorldEvents.LOAD.register(BuildStructure::load);
+		ServerWorldEvents.LOAD.register(((minecraftServer, serverWorld) -> {
+			BuildStructure.load(minecraftServer,serverWorld);
+
+
+
+        }));
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("gui")
 //					.executes(PeopleMineSeason5::gui));
@@ -235,7 +219,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 //			BuildManager.tick();
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
-			this.players = server.getPlayerManager().getPlayerList();
+			PeopleMineSeason5.players = server.getPlayerManager().getPlayerList();
 			Tesst.init(server);
 
 			for (ServerPlayerEntity player : players) {

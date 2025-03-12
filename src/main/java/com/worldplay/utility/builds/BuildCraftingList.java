@@ -1,7 +1,11 @@
 package com.worldplay.utility.builds;
 
 import com.google.gson.*;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.WorldSavePath;
 
 import java.io.FileReader;
@@ -16,6 +20,16 @@ public class BuildCraftingList {
     static JsonElement BUILD_LIST;
 
     public static void onServerStart(MinecraftServer server) {
+
+        String command = "polymer generate-pack reload";
+        CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager().getDispatcher();
+        ParseResults<ServerCommandSource> parseResults = dispatcher.parse(command, server.getCommandSource());
+        try {
+            dispatcher.execute(parseResults);
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             // Получаем путь к корневой папке мира
             Path worldDir = server.getSavePath(WorldSavePath.ROOT);

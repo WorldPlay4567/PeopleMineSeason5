@@ -45,18 +45,6 @@ public abstract class AnvilBlockMixin{
 //    private void tailConstructor(AbstractBlock.Settings settings, CallbackInfo ci) {
 //        this.setDefaultState(this.getDefaultState().with(BUY, false));
 //    }
-
-
-
-
-
-
-
-
-
-
-
-
 //
 //    public AnvilBlockMixin(Settings settings) {
 //        super(settings);

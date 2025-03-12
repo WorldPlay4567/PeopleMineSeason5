@@ -37,6 +37,9 @@
 		"fabric-api": "*",
 		"polymer-bundled": ">=0.11.5+1.21.4"
 	},
+	"after": {
+		"betterhud": "*"
+	},
 	"suggests": {
 		"another-mod": "*"
 	}

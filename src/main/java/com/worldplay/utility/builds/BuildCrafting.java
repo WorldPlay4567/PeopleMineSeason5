@@ -131,7 +131,6 @@ public class BuildCrafting {
 
         }
 
-
         if(!Objects.equals(jsonObject.get("target").getAsString(), "")) {
             String target_name = jsonObject.get("target").getAsString();
             simpleGui.setSlot(13, new GuiElementBuilder(ItemsInit.BLUE_PRINT)
