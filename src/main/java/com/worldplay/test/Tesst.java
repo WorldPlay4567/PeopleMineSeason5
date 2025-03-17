@@ -21,7 +21,7 @@ public class Tesst {
 
     public static void init(MinecraftServer server) {
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-            dark(player);
+//            dark(player);
 //            start(player);
         }
     }

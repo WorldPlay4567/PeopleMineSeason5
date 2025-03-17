@@ -8,6 +8,7 @@
     "EndPortalDisable",
     "MinecraftServerMixin",
     "PortalDisable",
+    "Test",
     "VillagerMixin"
   ],
   "injectors": {

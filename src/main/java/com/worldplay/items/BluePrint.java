@@ -1,16 +1,11 @@
 
 package com.worldplay.items;
 
-import com.worldplay.PeopleMineSeason5;
 import com.worldplay.api.RPFast;
 import com.worldplay.particle.CubeParticle;
 import com.worldplay.utility.builds.BuildManager;
 import com.worldplay.utility.builds.PlaceBuild;
 import eu.pb4.polymer.core.api.item.PolymerItem;
-import eu.pb4.polymer.core.api.item.SimplePolymerItem;
-import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
-import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
-import kr.toxicity.hud.api.BetterHud;
 import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;
 
 import net.minecraft.component.DataComponentTypes;
@@ -152,6 +147,19 @@ public class BluePrint extends Item implements PolymerItem {
 
         }
     }
+
+    public static void setStructure(ItemStack itemStack, String nameStructure) {
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putString("structure", nameStructure);
+        itemStack.set(DataComponentTypes.CUSTOM_DATA,NbtComponent.of(nbtCompound));
+    }
+
+    public static String getStructure(ItemStack itemStack) {
+        NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
+        NbtCompound nbtCompound = nbtComponent.copyNbt();
+        return nbtCompound.getString("structure");
+    }
+
     @Override
     public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
         return Items.PAPER;

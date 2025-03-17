@@ -2,8 +2,8 @@ package com.worldplay.mixin;
 
 import com.worldplay.utility.ConfigVillager;
 import com.worldplay.utility.ConfigVillagerRegister;
-import com.worldplay.utility.builds.BuildCrafting;
 import com.worldplay.utility.builds.update.UpdateGui;
+import com.worldplay.utility.crafting.VillagerBluePrint;
 import com.worldplay.utility.villager.VillagerGui;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -48,8 +48,8 @@ public abstract class VillagerMixin {
 			test7((ServerPlayerEntity) player, ConfigVillagerRegister.PRODUCT);
 			cir.setReturnValue(ActionResult.FAIL);
 		}
-		if (villager.hasCustomName() && "Строитель".equals(villager.getCustomName().getString()) && !BuildCrafting.playerInteract) {
-			BuildCrafting.selectionGUI((ServerPlayerEntity) player, null);
+		if (villager.hasCustomName() && "Строитель".equals(villager.getCustomName().getString())) {
+			new VillagerBluePrint((ServerPlayerEntity) player);
 		}
 		// This code is injected into the start of MinecraftServer.loadWorld()V
 	}

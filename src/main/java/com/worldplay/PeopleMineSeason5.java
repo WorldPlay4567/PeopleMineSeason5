@@ -15,6 +15,8 @@ import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
 
+import com.worldplay.utility.crafting.BluePrintList;
+import com.worldplay.utility.crafting.BluePrintRequirement;
 import com.worldplay.utility.villager.VillagerShopList;
 import de.tomalbrc.bil.core.model.Model;
 import de.tomalbrc.bil.file.loader.AjModelLoader;
@@ -34,6 +36,7 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -76,6 +79,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		BuildManager.start();
 		ConfigVillagerRegister.init();
 
+
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
@@ -94,9 +98,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		});
 		ServerWorldEvents.LOAD.register(((minecraftServer, serverWorld) -> {
 			BuildStructure.load(minecraftServer,serverWorld);
-
-
-
+			BluePrintList.load(minecraftServer);
         }));
 //		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 //			dispatcher.register(CommandManager.literal("gui")
