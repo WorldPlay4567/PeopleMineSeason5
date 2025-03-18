@@ -49,6 +49,28 @@ public class BluePrintRequirement {
         }
     }
 
+    public JsonElement getJson() {
+
+        JsonArray jsonArray = new JsonArray();
+
+        for(Items items : listRequirement) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("is_complete", items.is_compile);
+            jsonObject.addProperty("count", items.count);
+            jsonObject.addProperty("name", String.valueOf(items.item));
+
+            jsonArray.add(jsonObject);
+        }
+
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty("is_complete", is_complete);
+        jsonObject.addProperty("name", nameBluePrint);
+        jsonObject.add("items", jsonArray);
+
+        return jsonObject;
+    }
+
     public boolean is_allComplete() {
         int no_complete = 0;
 

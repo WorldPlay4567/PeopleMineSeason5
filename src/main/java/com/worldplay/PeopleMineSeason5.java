@@ -95,6 +95,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
 			ConfigVillagerRegister.save();
 			VillagerShopList.save();
+			BluePrintList.save(server);
 		});
 		ServerWorldEvents.LOAD.register(((minecraftServer, serverWorld) -> {
 			BuildStructure.load(minecraftServer,serverWorld);
@@ -220,6 +221,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 		ServerTickEvents.START_SERVER_TICK.register((server)-> {
 //			BuildManager.tick();
+
 			Iterable<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
 			PeopleMineSeason5.players = server.getPlayerManager().getPlayerList();
 			Tesst.init(server);
