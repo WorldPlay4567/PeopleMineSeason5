@@ -21,14 +21,14 @@ public class BuildCraftingList {
 
     public static void onServerStart(MinecraftServer server) {
 
-        String command = "polymer generate-pack reload";
-        CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager().getDispatcher();
-        ParseResults<ServerCommandSource> parseResults = dispatcher.parse(command, server.getCommandSource());
-        try {
-            dispatcher.execute(parseResults);
-        } catch (CommandSyntaxException e) {
-            throw new RuntimeException(e);
-        }
+//        String command = "polymer generate-pack reload";
+//        CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager().getDispatcher();
+//        ParseResults<ServerCommandSource> parseResults = dispatcher.parse(command, server.getCommandSource());
+//        try {
+//            dispatcher.execute(parseResults);
+//        } catch (CommandSyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
 
         try {
             // Получаем путь к корневой папке мира

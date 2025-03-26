@@ -4,6 +4,7 @@ package com.worldplay;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.worldplay.api.CustomMenuHelper;
 import com.worldplay.blocks.BlockInit;
 import com.worldplay.blocks.CustomBlockList;
 import com.worldplay.chat.ChatCord;
@@ -78,7 +79,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 		VillagerShopList.init();
 		BuildManager.start();
 		ConfigVillagerRegister.init();
-
+		CustomMenuHelper.init();
 
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");

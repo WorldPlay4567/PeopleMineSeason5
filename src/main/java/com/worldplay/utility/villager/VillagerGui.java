@@ -1,5 +1,6 @@
 package com.worldplay.utility.villager;
 
+import com.worldplay.api.CustomMenuHelper;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,9 +21,7 @@ public class VillagerGui extends MerchantGui {
         super(player, false);
         this.name = name;
         villagerShop = VillagerShopList.getVillagerShop(name);
-        this.setTitle(Text.literal("")
-                .append(Text.translatable("space.-470").styled(style -> style.withFont(Identifier.of("space","default"))))
-                .append(Text.literal("\u0010").styled(style -> style.withFont(Identifier.of("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
+        this.setTitle(CustomMenuHelper.TEST);
         openGui();
 
     }

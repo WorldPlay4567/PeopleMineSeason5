@@ -20,8 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayerEntity.class)
 public abstract class CustomTabColor extends PlayerEntity {
 
-    @Shadow @Nullable public abstract Text getPlayerListName();
-
     public CustomTabColor(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
     }
@@ -33,16 +31,6 @@ public abstract class CustomTabColor extends PlayerEntity {
         }  catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public boolean isSpectator() {
-        return false;
-    }
-
-    @Override
-    public boolean isCreative() {
-        return false;
     }
 
         @Unique
