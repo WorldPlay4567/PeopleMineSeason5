@@ -28,7 +28,6 @@ public class BluePrintList {
         }
 
         try {
-
             Path worldDir = server.getSavePath(WorldSavePath.ROOT);
             worldDir = worldDir.resolve("builds").normalize();
 
@@ -38,7 +37,6 @@ public class BluePrintList {
 
             try(DirectoryStream<Path> stream = Files.newDirectoryStream(worldDir, "*.json")) {
                 for(Path entry: stream) {
-
                     try(FileReader fileReader = new FileReader(entry.toFile())) {
                         BluePrintRequirement bluePrintRequirement = new BluePrintRequirement(JsonParser.parseReader(fileReader));
                         BLUE_PRINT.add(bluePrintRequirement);

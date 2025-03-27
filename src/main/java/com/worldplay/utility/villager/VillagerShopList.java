@@ -14,8 +14,6 @@ public class VillagerShopList {
     private final static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static List<VillagerShop> register = new ArrayList<>();
 
-
-
     public static void init() {
         register("stone");
     }

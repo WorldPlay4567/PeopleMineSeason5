@@ -1,7 +1,5 @@
 package com.worldplay.mixin;
 
-import com.worldplay.utility.ConfigVillager;
-import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.update.UpdateGui;
 import com.worldplay.utility.crafting.VillagerBluePrint;
 import com.worldplay.utility.villager.VillagerGui;

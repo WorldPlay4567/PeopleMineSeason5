@@ -1,9 +1,6 @@
 package com.worldplay;
 
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.ParseResults;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.worldplay.api.CustomMenuHelper;
 import com.worldplay.blocks.BlockInit;
 import com.worldplay.blocks.CustomBlockList;
@@ -12,12 +9,10 @@ import com.worldplay.chat.CordCommand;
 import com.worldplay.items.BluePrint;
 import com.worldplay.items.ItemsInit;
 import com.worldplay.test.Tesst;
-import com.worldplay.utility.ConfigVillagerRegister;
 import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
 
 import com.worldplay.utility.crafting.BluePrintList;
-import com.worldplay.utility.crafting.BluePrintRequirement;
 import com.worldplay.utility.villager.VillagerShopList;
 import de.tomalbrc.bil.core.model.Model;
 import de.tomalbrc.bil.file.loader.AjModelLoader;
@@ -26,7 +21,6 @@ import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import eu.pb4.sgui.api.GuiHelpers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -37,7 +31,6 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -78,7 +71,6 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ChatCord.init();
 		VillagerShopList.init();
 		BuildManager.start();
-		ConfigVillagerRegister.init();
 		CustomMenuHelper.init();
 
 		LOGGER.info("=====================");
@@ -86,15 +78,14 @@ public class PeopleMineSeason5 implements ModInitializer {
 		LOGGER.info("=====================");
 		LOGGER.info(FabricLoader.getInstance().getGameDir().toString());
 //		ConfigVillager.loadOrCreateConfig();
-		ServerLifecycleEvents.SERVER_STARTED.register(BuildCraftingList::onServerStart);
-		ServerLifecycleEvents.SERVER_STOPPING.register(BuildCraftingList::onServerClose);
+//		ServerLifecycleEvents.SERVER_STARTED.register(BuildCraftingList::onServerStart);
+//		ServerLifecycleEvents.SERVER_STOPPING.register(BuildCraftingList::onServerClose);
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));
 		});
 
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
-			ConfigVillagerRegister.save();
 			VillagerShopList.save();
 			BluePrintList.save(server);
 		});

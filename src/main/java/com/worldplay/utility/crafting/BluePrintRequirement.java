@@ -3,25 +3,8 @@ package com.worldplay.utility.crafting;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.nimbusds.jose.util.Resource;
-import com.worldplay.PeopleMineSeason5;
-import com.worldplay.utility.builds.BuildCraftingConfig;
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.WorldSavePath;
-import org.apache.logging.log4j.core.jmx.Server;
-import org.spongepowered.asm.mixin.injection.Inject;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
