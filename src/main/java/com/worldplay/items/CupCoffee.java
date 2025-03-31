@@ -28,18 +28,18 @@ public class CupCoffee extends Item implements PolymerItem {
         super(settings);
     }
 
-    @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-//        if(EntityType.PLAYER == entity.getType()) {
-//            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) entity;
-////            System.out.println(serverPlayer);
-//
-//            stack.set(DataComponentTypes.ITEM_MODEL, Identifier.of("minecraft","mosin_rifle"));
-//            ProfileComponent profileComponent1 = new ProfileComponent(serverPlayer.getGameProfile());
-//            stack.set(DataComponentTypes.PROFILE, profileComponent1);
-//            this.getPolymerItem(stack, context);
-//        }
-    }
+//    @Override
+//    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+////        if(EntityType.PLAYER == entity.getType()) {
+////            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) entity;
+//////            System.out.println(serverPlayer);
+////
+////            stack.set(DataComponentTypes.ITEM_MODEL, Identifier.of("minecraft","mosin_rifle"));
+////            ProfileComponent profileComponent1 = new ProfileComponent(serverPlayer.getGameProfile());
+////            stack.set(DataComponentTypes.PROFILE, profileComponent1);
+////            this.getPolymerItem(stack, context);
+////        }
+//    }
 
     @Override
     public void modifyBasePolymerItemStack(ItemStack out, ItemStack stack, PacketContext context) {

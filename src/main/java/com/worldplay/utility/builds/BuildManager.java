@@ -76,7 +76,7 @@ public class BuildManager {
 
 //            serverPlayer.networkHandler.sendPacket(VirtualEntityUtils.createSetCameraEntityPacket(serverPlayer.getServer().getWorld(World.OVERWORLD).getEntity(uuid).getId()));
 //            serverPlayer.networkHandler.sendPacket(VirtualEntityUtils.createRidePacket(serverPlayer.getServer().getWorld(World.OVERWORLD).getEntity(uuid).getId(), IntList.of(serverPlayer.getId())));
-            serverPlayer.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.GAME_MODE_CHANGED, GameMode.SPECTATOR.getId()));
+            serverPlayer.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.GAME_MODE_CHANGED, GameMode.SPECTATOR.getIndex()));
             serverPlayer.networkHandler.sendPacket(new EntityS2CPacket.Rotate(serverPlayer.getId(), (byte) 90, (byte) 0, serverPlayer.isOnGround()));
             serverPlayer.networkHandler.sendPacket(new EntityTrackerUpdateS2CPacket(serverPlayer.getId(), List.of(DataTracker.SerializedEntry.of(EntityTrackedData.POSE, EntityPose.STANDING))));
 

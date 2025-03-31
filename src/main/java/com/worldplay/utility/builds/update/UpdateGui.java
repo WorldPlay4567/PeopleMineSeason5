@@ -136,7 +136,7 @@ public class UpdateGui extends SimpleGui {
         structureData.posStructure = posStructure;
         structureData.visibleLineBox = visibleLineBox;
 
-        saveStructure.setStructureData(structureData);
+//        saveStructure.setStructureData(structureData);
     }
 
     public void setNbt(NbtCompound nbt) {

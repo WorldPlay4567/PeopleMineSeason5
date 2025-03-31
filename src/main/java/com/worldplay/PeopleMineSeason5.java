@@ -3,7 +3,6 @@ package com.worldplay;
 
 import com.worldplay.api.CustomMenuHelper;
 import com.worldplay.blocks.BlockInit;
-import com.worldplay.blocks.CustomBlockList;
 import com.worldplay.chat.ChatCord;
 import com.worldplay.chat.CordCommand;
 import com.worldplay.items.BluePrint;
@@ -54,7 +53,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private final Map<UUID, ArmorStandEntity> playerArmorStands = new HashMap<>();
 	public static Iterable<ServerPlayerEntity> players;
-	public static final Model MODEL_FROM_ID = AjModelLoader.load(Identifier.of("peoplemineseason5","test"));
+//	public static final Model MODEL_FROM_ID = AjModelLoader.load(Identifier.of("peoplemineseason5","test"));
 //	public static final Model MODEL_FROM_FILEPATH = BbModelLoader.load("model/peoplemineseason5/test.ajmodel");
 
 
@@ -227,7 +226,7 @@ public class PeopleMineSeason5 implements ModInitializer {
 
 		});
 
-		CustomBlockList.init();
+//		CustomBlockList.init();
 		ItemsInit.init();
 		BlockInit.init();
 

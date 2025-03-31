@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.8-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -48,26 +48,26 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation include("de.tomalbrc:blockbench-import-library:1.1.20+1.21.2")
-	modImplementation include("xyz.nucleoid:server-translations-api:2.4.0+1.21.2-rc1")
+//	modImplementation include("de.tomalbrc:blockbench-import-library:1.1.20+1.21.2")
+//	modImplementation include("xyz.nucleoid:server-translations-api:2.4.0+1.21.2-rc1")
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-blocks:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack-extras:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-networking:${project.polymer_version}")
-	modImplementation include("eu.pb4:sgui:1.8.2+1.21.4")
+	modImplementation include("eu.pb4:sgui:1.9.0+1.21.5")
 
 	modImplementation include("eu.pb4:polymer-virtual-entity:${project.polymer_version}")
-	modImplementation include("eu.pb4:factorytools:0.5.0+1.21.4")
+	modImplementation include("eu.pb4:factorytools:0.6.0+1.21.5")
 	modImplementation include("maven.modrinth:structureplacerapi:1.1.0")
 
-	compileOnly("io.github.toxicity188:BetterHud-standard-api:1.11.4") //Standard api
-	modCompileOnly("io.github.toxicity188:BetterHud-fabric-api:1.11.4") //Platform api
-	compileOnly("io.github.toxicity188:BetterCommand:1.4.2") //BetterCommand library
+//	compileOnly("io.github.toxicity188:BetterHud-standard-api:1.11.4") //Standard api
+//	modCompileOnly("io.github.toxicity188:BetterHud-fabric-api:1.11.4") //Platform api
+//	compileOnly("io.github.toxicity188:BetterCommand:1.4.2") //BetterCommand library
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+	modLocalRuntime "eu.pb4:polymer-autohost:${project.polymer_version}"
 }
 
 processResources {

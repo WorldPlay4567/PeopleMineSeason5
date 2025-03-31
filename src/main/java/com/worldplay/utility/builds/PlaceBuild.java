@@ -80,7 +80,7 @@ public class PlaceBuild {
                                         structurePos.getY() + entity.getEntityPos().y,
                                         structurePos.getZ() + entity.getEntityPos().z
                                 );
-                                entity1.readNbt(entity.getNbtEntity().getCompound("nbt"));
+                                entity1.readNbt(entity.getNbtEntity().getCompound("nbt").get());
                                 entity1.setUuid(UUID.randomUUID());
                                 entity1.setPosition(vec3d);
                                 world.spawnEntity(entity1);

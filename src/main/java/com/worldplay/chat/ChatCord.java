@@ -34,8 +34,8 @@ public class ChatCord {
                 return true;
             }
 
-            ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/compass " + number);
-            HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Нажми чтобы получить компас"));
+            ClickEvent clickEvent = new ClickEvent.RunCommand("/compass " + number);
+            HoverEvent hoverEvent = new HoverEvent.ShowText(Text.literal("Нажми чтобы получить компас"));
 
             // Формируем итоговое сообщение с ником игрока (вы можете изменить форматирование по своему усмотрению)
             MutableText fullMessage = Text.literal("<" + sender.getName().getString() + "> ")

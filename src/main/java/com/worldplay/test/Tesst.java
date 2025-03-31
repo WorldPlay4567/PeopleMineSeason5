@@ -60,12 +60,12 @@ public class Tesst {
 // to the client
         player.networkHandler.sendPacket(
                 new AdvancementUpdateS2CPacket(false, Set.of(advancement),
-                        Collections.emptySet(), Map.of(advancementId, progress)));
+                        Collections.emptySet(), Map.of(advancementId, progress),true));
 
 // Immediately remove the advancement so it doesn't appear in the "Advancements"
 // screen (optional)
         player.networkHandler.sendPacket(new AdvancementUpdateS2CPacket(false,
-                Collections.emptySet(), Set.of(advancementId), Collections.emptyMap()));
+                Collections.emptySet(), Set.of(advancementId), Collections.emptyMap(),true));
     }
 //    private void updatePlayerTabName(ServerPlayerEntity player) {
 //        Formatting color = getColorForDimension(player);

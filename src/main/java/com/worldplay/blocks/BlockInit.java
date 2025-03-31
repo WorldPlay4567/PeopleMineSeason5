@@ -20,7 +20,7 @@ import static net.minecraft.registry.Registries.BLOCK;
 
 public class BlockInit {
 
-    public static final Block CUSTOM_BLOCK = registerOld(BlockModelType.TRANSPARENT_BLOCK, "custom_block_test");
+//    public static final Block CUSTOM_BLOCK = registerOld(BlockModelType.TRANSPARENT_BLOCK, "custom_block_test");
 
 
 
@@ -49,18 +49,18 @@ public class BlockInit {
 
 //    public static final Block ANVIL_BLOCK = Registry.register(BLOCK, Identifier.of("minecraft","anvil"),new AnvilBlockRemake(Block.Settings.copy(Blocks.ANVIL).registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of("minecraft","anvil")))));
 
-    public static Block registerOld(BlockModelType type, String modelId) {
-        var id = Identifier.of("peoplemineseason5", modelId);
-        var block = Registry.register(BLOCK, id,
-                new CustomBlockTest(Block.Settings.copy(Blocks.DIAMOND_BLOCK)
-                        .registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of(PeopleMineSeason5.MOD_ID,modelId)))
-                        , type,"block/" + modelId));
-
-        Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings()
-                .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,modelId))), block, modelId));
-
-        return block;
-    }
+//    public static Block registerOld(BlockModelType type, String modelId) {
+//        var id = Identifier.of("peoplemineseason5", modelId);
+//        var block = Registry.register(BLOCK, id,
+//                new CustomBlockTest(Block.Settings.copy(Blocks.DIAMOND_BLOCK)
+//                        .registryKey(RegistryKey.of(RegistryKeys.BLOCK,Identifier.of(PeopleMineSeason5.MOD_ID,modelId)))
+//                        , type,"block/" + modelId));
+//
+//        Registry.register(Registries.ITEM, id, new DefaultItemBlock(new Item.Settings()
+//                .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PeopleMineSeason5.MOD_ID,modelId))), block, modelId));
+//
+//        return block;
+//    }
 
     public static <T extends Block> T register(String path, T item) {
         var id = Identifier.of(PeopleMineSeason5.MOD_ID, path);

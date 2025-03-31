@@ -8,10 +8,12 @@ import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -24,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 
 public class TremblingCrystal extends SimplePolymerItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
@@ -42,7 +46,7 @@ public class TremblingCrystal extends SimplePolymerItem implements PolymerItem, 
          ServerWorld serverWorld = context.getWorld().getServer().getOverworld();
          serverWorld.spawnParticles(ParticleTypes.END_ROD, blockPos.getX() + 0.5, blockPos.getY()+ 0.5, blockPos.getZ()+ 0.5, 5, 0.1, 0.1,0.1,0.1);
          serverWorld.playSound(null,blockPos.getX() + 0.5, blockPos.getY()+ 0.5, blockPos.getZ()+ 0.5, SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.PLAYERS, 0.1f,1);
-         ItemStack itemStack = context.getPlayer().getHandItems().iterator().next();
+         ItemStack itemStack = Objects.requireNonNull(context.getPlayer()).getStackInHand(Hand.MAIN_HAND);
 
          context.getPlayer().getItemCooldownManager().set(itemStack, 120);
          ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) context.getPlayer();
@@ -51,12 +55,11 @@ public class TremblingCrystal extends SimplePolymerItem implements PolymerItem, 
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
 
-        tooltip.add(1,Text.literal("Этот кристал что-то излучает...").formatted(Formatting.WHITE));
-        tooltip.add(2,Text.literal("*дрожит*").formatted(Formatting.BLUE));
+        textConsumer.accept(Text.literal("Этот кристал что-то излучает...").formatted(Formatting.WHITE));
+        textConsumer.accept(Text.literal("*дрожит*").formatted(Formatting.BLUE));
 
-        super.appendTooltip(stack, context, tooltip, type);
     }
 
     @Override

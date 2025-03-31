@@ -10,10 +10,12 @@ import me.emafire003.dev.structureplacerapi.StructurePlacerAPI;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,6 +35,7 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 ////
 /////give @s peoplemineseason5:blue_print[minecraft:custom_data={"structure":"peoplemineseason5:market_1"}]
@@ -72,7 +75,7 @@ public class BluePrint extends Item implements PolymerItem {
                         return ActionResult.SUCCESS_SERVER;
                     } else {
 
-                    Identifier identifier = Identifier.of(nbtCompound.get("structure").asString());
+                    Identifier identifier = Identifier.of(nbtCompound.get("structure").asString().get());
 
                     float x = playerEntity.getBlockPos().getX();
                     float y = playerEntity.getBlockPos().getY() - 1;
@@ -101,25 +104,24 @@ public class BluePrint extends Item implements PolymerItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
         if (nbtComponent != null) {
 
             NbtCompound nbtCompound = nbtComponent.copyNbt();
             if (nbtCompound.get("structure") != null) {
-                tooltip.add(Text.literal(nbtCompound.get("structure").asString()).formatted(Formatting.AQUA));
+                textConsumer.accept(Text.literal(nbtCompound.get("structure").asString().get()).formatted(Formatting.AQUA));
             } else {
-                tooltip.add(Text.literal("Пусто чертеж").formatted(Formatting.AQUA));
+                textConsumer.accept(Text.literal("Пусто чертеж").formatted(Formatting.AQUA));
             }
-            super.appendTooltip(stack, context, tooltip, type);
         } else {
-            tooltip.add(Text.literal("Пусто чертеж").formatted(Formatting.AQUA));
+            textConsumer.accept(Text.literal("Пусто чертеж").formatted(Formatting.AQUA));
         }
     }
     public static void tick(PlayerEntity player) {
-        if (player.getInventory().getMainHandStack().getItem() == ItemsInit.BLUE_PRINT){
+        if (player.getInventory().getSelectedStack().getItem() == ItemsInit.BLUE_PRINT){
 
-            ItemStack itemStack = player.getInventory().getMainHandStack();
+            ItemStack itemStack = player.getInventory().getSelectedStack();
             NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
             if (nbtComponent != null) {
                 NbtCompound nbtCompound = nbtComponent.copyNbt();
@@ -131,7 +133,7 @@ public class BluePrint extends Item implements PolymerItem {
 
                 player.sendMessage(Text.literal(message).setStyle(style),true);
             } else {
-                Identifier identifier = Identifier.of(nbtCompound.get("structure").asString());
+                Identifier identifier = Identifier.of(nbtCompound.get("structure").asString().get());
                 StructureTemplate structureTemplate = Objects.requireNonNull(player.getServer()).getStructureTemplateManager().getTemplateOrBlank(identifier);
                 Vec3i vec3i = structureTemplate.getSize();
 //                System.out.println(vec3i);
@@ -157,7 +159,7 @@ public class BluePrint extends Item implements PolymerItem {
     public static String getStructure(ItemStack itemStack) {
         NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
         NbtCompound nbtCompound = nbtComponent.copyNbt();
-        return nbtCompound.getString("structure");
+        return nbtCompound.getString("structure").get();
     }
 
     @Override

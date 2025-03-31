@@ -30,23 +30,23 @@ public class BuildStructure {
     public static ArrayList<BuildEntity> getEntityBuild(String structureName) {
         NbtCompound nbt = getStructure(structureName);
         ArrayList<BuildEntity> buildEntities = new ArrayList<>();
-        NbtList entitiesNbt = nbt.getList("entities", 10);
+        NbtList entitiesNbt = nbt.getList("entities").get();
 
         for (int i = 0; i < entitiesNbt.size(); i++) {
-            NbtCompound entityNbt = entitiesNbt.getCompound(i);
+            NbtCompound entityNbt = entitiesNbt.getCompound(i).get();
 
 
-            String entityId =  entityNbt.getCompound("nbt").getString("id");
+            String entityId =  entityNbt.getCompound("nbt").get().getString("id").get();
 
             Identifier identifier = Identifier.of(entityId);
             Optional<EntityType<?>> entityType = EntityType.get(identifier.toString());
 
-            NbtList blockPosNbt = entityNbt.getList("pos", 6);
+            NbtList blockPosNbt = entityNbt.getList("pos").get();
 
             Vec3d vec3d = new Vec3d(
-                    blockPosNbt.getDouble(0),
-                    blockPosNbt.getDouble(1),
-                    blockPosNbt.getDouble(2));
+                    blockPosNbt.getDouble(0).get(),
+                    blockPosNbt.getDouble(1).get(),
+                    blockPosNbt.getDouble(2).get());
 
             buildEntities.add(new BuildEntity(
                     vec3d,
@@ -63,20 +63,20 @@ public class BuildStructure {
         ArrayList<BuildBlock> blocks = new ArrayList<>();
 
         // load in blocks (list of blockPos and their palette index)
-        NbtList blocksNbt = nbt.getList("blocks", 10);
+        NbtList blocksNbt = nbt.getList("blocks").get();
         ArrayList<BlockState> palette = getBuildPalette(nbt);
 
         for(int i = 0; i < blocksNbt.size(); i++) {
-            NbtCompound blockNbt = blocksNbt.getCompound(i);
-            NbtList blockPosNbt = blockNbt.getList("pos", 3);
+            NbtCompound blockNbt = blocksNbt.getCompound(i).get();
+            NbtList blockPosNbt = blockNbt.getList("pos").get();
 
             blocks.add(new BuildBlock(
                     new BlockPos(
-                            blockPosNbt.getInt(0),
-                            blockPosNbt.getInt(1),
-                            blockPosNbt.getInt(2)
+                            blockPosNbt.getInt(0).get(),
+                            blockPosNbt.getInt(1).get(),
+                            blockPosNbt.getInt(2).get()
                     ),
-                    palette.get(blockNbt.getInt("state"))
+                    palette.get(blockNbt.getInt("state").get())
             ));
         }
         return blocks;
@@ -109,10 +109,10 @@ public class BuildStructure {
     public static ArrayList<BlockState> getBuildPalette(NbtCompound nbt) {
         ArrayList<BlockState> palette = new ArrayList<>();
 
-        NbtList paletteNBT = nbt.getList("palette", NbtElement.COMPOUND_TYPE);
+        NbtList paletteNBT = nbt.getList("palette").get();
 
         for (int i = 0; i < paletteNBT.size(); i++) {
-            NbtCompound blockStateNbt = paletteNBT.getCompound(i);
+            NbtCompound blockStateNbt = paletteNBT.getCompound(i).get();
 
             int finalI = i;
             BlockState blockState = BlockState.CODEC.parse(NbtOps.INSTANCE, blockStateNbt)
@@ -127,10 +127,10 @@ public class BuildStructure {
     public static ArrayList<BlockState> getEntityPalette(NbtCompound nbt) {
         ArrayList<BlockState> palette = new ArrayList<>();
 
-        NbtList paletteNBT = nbt.getList("palette", NbtElement.COMPOUND_TYPE);
+        NbtList paletteNBT = nbt.getList("palette").get();
 
         for (int i = 0; i < paletteNBT.size(); i++) {
-            NbtCompound blockStateNbt = paletteNBT.getCompound(i);
+            NbtCompound blockStateNbt = paletteNBT.getCompound(i).get();
 
             int finalI = i;
             BlockState blockState = BlockState.CODEC.parse(NbtOps.INSTANCE, blockStateNbt)
