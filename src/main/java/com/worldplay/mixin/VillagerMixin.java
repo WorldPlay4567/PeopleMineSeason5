@@ -3,6 +3,7 @@ package com.worldplay.mixin;
 import com.worldplay.utility.builds.update.UpdateGui;
 import com.worldplay.utility.crafting.VillagerBluePrint;
 import com.worldplay.utility.villager.VillagerGui;
+import com.worldplay.utility.villager.anvil.AnvilVilager;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,6 +36,11 @@ public abstract class VillagerMixin {
 				UpdateGui updateGui = new UpdateGui((ServerPlayerEntity) player, villager);
 				updateGui.openUpdateGui();
 			}
+		}
+
+		if (villager.hasCustomName() && "Кузнец".equals(villager.getCustomName().getString())) {
+			new AnvilVilager((ServerPlayerEntity) player);
+			cir.setReturnValue(ActionResult.FAIL);
 		}
 
 		if (villager.hasCustomName() && "Каменщик".equals(villager.getCustomName().getString())) {

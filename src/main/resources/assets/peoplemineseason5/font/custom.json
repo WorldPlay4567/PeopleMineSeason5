@@ -34,6 +34,20 @@
 			"ascent": 13,
 			"height": 256,
 			"chars": ["\u0010"]
+		}		,
+		{
+			"type": "bitmap",
+			"file": "peoplemineseason5:font/blue_print/gui_1.png",
+			"ascent": 32,
+			"height": 151,
+			"chars": ["\u0011"]
+		}		,
+		{
+			"type": "bitmap",
+			"file": "peoplemineseason5:font/blue_print/gui_2.png",
+			"ascent": 32,
+			"height": 151,
+			"chars": ["\u0012"]
 		}
 	]
 

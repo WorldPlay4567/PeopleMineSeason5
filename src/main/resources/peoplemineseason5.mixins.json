@@ -4,9 +4,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AnvilBlockMixin",
+    "AnvilScreenHandlerMixin",
     "CustomTabColor",
     "EndPortalDisable",
+    "EntityMixin",
     "MinecraftServerMixin",
+    "PlayerEntityMixin",
     "PortalDisable",
     "VillagerMixin"
   ],

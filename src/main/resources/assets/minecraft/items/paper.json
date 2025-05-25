@@ -1,0 +1,21 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "tints": [],
+    "model": "",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {
+        "when": "blocks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:block/acacia_fence_gate"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

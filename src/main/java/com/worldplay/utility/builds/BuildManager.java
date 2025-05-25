@@ -101,7 +101,6 @@ public class BuildManager {
                 }
             }
         } catch (Exception e) {
-            // Логируем ошибку, но не даем задаче упасть
             e.printStackTrace();
             System.err.println("Ошибка в методе tick: " + e.getMessage());
         }

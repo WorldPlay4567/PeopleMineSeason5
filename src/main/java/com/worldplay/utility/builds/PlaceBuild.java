@@ -1,5 +1,6 @@
 package com.worldplay.utility.builds;
 
+import com.worldplay.api.AchivmentTextSend;
 import com.worldplay.utility.KillEntityBox;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -151,7 +152,7 @@ public class PlaceBuild {
         world.spawnEntity(villager);
 
         world.playSound(null, blockPos.getX(),blockPos.getY(),blockPos.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 120f, 1f);
-        serverPlayer.sendMessage(Text.literal("==========================\n Постройка завершена \n=========================="));
+        AchivmentTextSend.sendMessage(serverPlayer,"Постройка завершена", name);
     }
 
     private void placeBlock(BlockPos blockPos, BlockState blockState) {

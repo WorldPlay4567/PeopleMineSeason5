@@ -7,14 +7,14 @@ import com.worldplay.chat.ChatCord;
 import com.worldplay.chat.CordCommand;
 import com.worldplay.items.BluePrint;
 import com.worldplay.items.ItemsInit;
+import com.worldplay.mini_people.MiniPeople;
+import com.worldplay.mini_people.MiniPeopleTools;
 import com.worldplay.test.Tesst;
 import com.worldplay.utility.builds.*;
 import com.mojang.brigadier.context.CommandContext;
 
 import com.worldplay.utility.crafting.BluePrintList;
 import com.worldplay.utility.villager.VillagerShopList;
-import de.tomalbrc.bil.core.model.Model;
-import de.tomalbrc.bil.file.loader.AjModelLoader;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import eu.pb4.sgui.api.GuiHelpers;
@@ -30,6 +30,8 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -41,6 +43,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
+import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,12 +71,16 @@ public class PeopleMineSeason5 implements ModInitializer {
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "item"));
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"));
 
+
+
+
 		CordCommand.init();
 		ChatCord.init();
 		VillagerShopList.init();
 		BuildManager.start();
 		CustomMenuHelper.init();
-
+		MiniPeopleTools.register();
+		MiniPeople.init();
 		LOGGER.info("=====================");
 		LOGGER.info("PeopleMineSeason5");
 		LOGGER.info("=====================");
@@ -79,6 +88,8 @@ public class PeopleMineSeason5 implements ModInitializer {
 //		ConfigVillager.loadOrCreateConfig();
 //		ServerLifecycleEvents.SERVER_STARTED.register(BuildCraftingList::onServerStart);
 //		ServerLifecycleEvents.SERVER_STOPPING.register(BuildCraftingList::onServerClose);
+
+
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			dispatcher.register(CommandManager.literal("peopleminereload")
 					.executes(PeopleMineSeason5::reload));

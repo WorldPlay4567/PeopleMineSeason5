@@ -1,5 +1,6 @@
 package com.worldplay.utility.crafting;
 
+import com.worldplay.api.CustomMenuHelper;
 import com.worldplay.items.BluePrint;
 import com.worldplay.items.ItemsInit;
 
@@ -28,7 +29,7 @@ public class VillagerBluePrint extends SimpleGui {
     BluePrintRequirement bluePrintCorrect;
 
     public VillagerBluePrint(ServerPlayerEntity player) {
-        super(ScreenHandlerType.GENERIC_9X3, player, false);
+        super(ScreenHandlerType.GENERIC_9X6, player, false);
 
         screenList();
         open();
@@ -80,19 +81,15 @@ public class VillagerBluePrint extends SimpleGui {
     }
 
     public void screenList() {
-        Text message = Text.literal("")
 
-                .append(Text.translatable("space.-49").styled(style -> style.withFont(Identifier.of("space","default")))
-                        .append(Text.literal("\u0008").styled(style -> style.withFont(Identifier.of("peoplemineseason5","custom")).withColor(Formatting.WHITE))));
-
-        this.setTitle(message);
+        this.setTitle(CustomMenuHelper.BLUE_PRINT);
 
         
         for(int i = 0; i < BluePrintList.BLUE_PRINT.size(); i++) {
 
             BluePrintRequirement blue_print = BluePrintList.BLUE_PRINT.get(i);
 
-            setSlot(18 + i, new GuiElementBuilder(ItemsInit.BLUE_PRINT)
+            setSlot(36 + i, new GuiElementBuilder(ItemsInit.BLUE_PRINT)
                     .setName(Text.literal("Цель: ")
                             .styled(style -> {return style.withColor(Formatting.GOLD);})
                             .append(Text.translatable(blue_print.nameBluePrint))

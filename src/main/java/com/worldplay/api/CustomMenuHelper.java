@@ -9,6 +9,8 @@ import net.minecraft.util.Identifier;
 public class CustomMenuHelper {
 
     public static MutableText TEST = registerTwoLayer("\u0006","\u0007");
+    public static MutableText BLUE_PRINT = registerTwoLayer("\u0011","\u0012");
+
 
     public static void init() {}
 
