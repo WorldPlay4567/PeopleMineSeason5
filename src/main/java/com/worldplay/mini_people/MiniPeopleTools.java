@@ -3,6 +3,7 @@ package com.worldplay.mini_people;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.worldplay.mini_people.people.PeopleDefault;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -84,7 +85,7 @@ public class MiniPeopleTools {
         NbtCompound nbtCompound = ((EntityDataSaver)serverPlayer).peopleMineSeason5$getPersistentData();
         NbtList nbtList = nbtCompound.getList("list").get();
 
-        for(MiniPeople.People people : MiniPeople.peopleList) {
+        for(PeopleDefault people : MiniPeople.peopleList) {
             System.out.println(people.id + "  " + id);
             if(Objects.equals(people.id, id)) {
 

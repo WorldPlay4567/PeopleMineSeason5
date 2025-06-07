@@ -15,9 +15,6 @@ public class MiniPeopleSkin {
     public static final String RUSLAN_SINGER = getSkinUrl("Hi_Im_Leo_");
     public static final String WEWE707 = getSkinUrl("wewe707");
 
-
-
-
     public static String getSkinUrl(String username) {
 
         try {

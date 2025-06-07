@@ -1,5 +1,8 @@
 package com.worldplay.mini_people;
 
+import com.worldplay.PeopleMineSeason5;
+import com.worldplay.mini_people.people.PeopleDefault;
+import eu.pb4.polymer.virtualentity.api.tracker.EntityTrackedData;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.component.ComponentType;
@@ -17,6 +20,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.*;
@@ -27,13 +31,15 @@ import static com.worldplay.mini_people.MiniPeopleSkin.WEWE707;
 
 public class MiniPeople {
 
-    public static List<People> peopleList = new ArrayList<>();
+    public static List<PeopleDefault> peopleList = new ArrayList<>();
 
     private static final Map<UUID, ArmorStandEntity> PETS = new ConcurrentHashMap<>();
 
     public static void init(){
-        register("wewe707", WEWE707, "MAGIC", Items.DIAMOND_CHESTPLATE.getDefaultStack(),  Items.DIAMOND_LEGGINGS.getDefaultStack(), Items.DIAMOND_BOOTS.getDefaultStack());
-        register("ruslan_singer", RUSLAN_SINGER, "MAGIC", GuiElementBuilder.from(Items.LEATHER_CHESTPLATE.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(),  GuiElementBuilder.from(Items.LEATHER_LEGGINGS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(), GuiElementBuilder.from(Items.LEATHER_BOOTS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack());
+        register("wewe707", WEWE707, "MAGIC",null, Items.DIAMOND_CHESTPLATE.getDefaultStack(),  Items.DIAMOND_LEGGINGS.getDefaultStack(), Items.DIAMOND_BOOTS.getDefaultStack());
+        register("ruslan_singer", RUSLAN_SINGER, "MAGIC",null, GuiElementBuilder.from(Items.LEATHER_CHESTPLATE.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(),  GuiElementBuilder.from(Items.LEATHER_LEGGINGS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(), GuiElementBuilder.from(Items.LEATHER_BOOTS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack());
+        register("fridge", RUSLAN_SINGER, "MAGIC",GuiElementBuilder.from(Items.STRUCTURE_VOID.getDefaultStack()).model(Identifier.of(PeopleMineSeason5.MOD_ID,"fridge")).asStack(), GuiElementBuilder.from(Items.LEATHER_CHESTPLATE.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(),  GuiElementBuilder.from(Items.LEATHER_LEGGINGS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack(), GuiElementBuilder.from(Items.LEATHER_BOOTS.getDefaultStack()).setComponent(DataComponentTypes.DYED_COLOR, new DyedColorComponent(Colors.BLACK)).asStack());
+
         ServerTickEvents.START_SERVER_TICK.register(MiniPeople::tick);
     }
 
@@ -74,27 +80,14 @@ public class MiniPeople {
         }
     }
 
-    static void spawnPet(ServerPlayerEntity player, People skin) {
+    static <T extends PeopleDefault> void spawnPet(ServerPlayerEntity player, T skin) {
 
         removePet(player);
 
         ArmorStandEntity stand = new ArmorStandEntity(EntityType.ARMOR_STAND, player.getWorld());
         stand.setPos(player.getX(),player.getY(), player.getZ());
 
-        byte flags = stand.getDataTracker().get(ArmorStandEntity.ARMOR_STAND_FLAGS);
 
-        flags |= 0x01;
-        flags |= 0x02;
-        flags |= 0x04;
-
-        stand.getDataTracker().set(ArmorStandEntity.ARMOR_STAND_FLAGS, (byte)(flags));
-
-        stand.equipStack(EquipmentSlot.HEAD, GuiElementBuilder.from(Items.PLAYER_HEAD.getDefaultStack())
-                .setSkullOwner(skin.head)
-                .asStack());
-        stand.equipStack(EquipmentSlot.CHEST, skin.items.get(0));
-        stand.equipStack(EquipmentSlot.LEGS, skin.items.get(1));
-        stand.equipStack(EquipmentSlot.FEET, skin.items.get(2));
 
         stand.setHideBasePlate(true);
         stand.setNoGravity(false);
@@ -117,14 +110,14 @@ public class MiniPeople {
         }
     }
 
-    public static void register(String id, String head, String lore, ItemStack chest, ItemStack legins, ItemStack boots) {
-        People people = new People(id, head, lore, chest, legins, boots);
+    public static void register(String id, String head, String lore,ItemStack head_item, ItemStack chest, ItemStack legins, ItemStack boots) {
+        PeopleDefault people = new PeopleDefault(id, head, lore, head_item,chest, legins, boots);
         peopleList.add(people);
 
     }
 
     public static NbtCompound getPeopleId(String id) {
-        for(People people : peopleList) {
+        for(PeopleDefault people : peopleList) {
             System.out.println(people.id + "   " + id);
 
             if(Objects.equals(people.id, id)) {
@@ -134,14 +127,13 @@ public class MiniPeople {
         return null;
     }
 
-    public static People getPeople(String id) {
+    public static PeopleDefault getPeople(String id) {
 
-        for(People people : peopleList) {
+        for(PeopleDefault people : peopleList) {
             if(Objects.equals(people.id, id)) {
                 return people;
             }
         }
-
         return null;
     }
 
@@ -153,10 +145,11 @@ public class MiniPeople {
 
         ArrayList<ItemStack> items = new ArrayList<>();
 
-        public People(String id, String head, String lore, ItemStack chest, ItemStack legins, ItemStack boots) {
+        public People(String id, String head, String lore,ItemStack head_item, ItemStack chest, ItemStack legins, ItemStack boots) {
             this.id = id;
             this.head = head;
             this.lore = lore;
+            this.items.add(head_item);
             this.items.add(chest);
             this.items.add(legins);
             this.items.add(boots);

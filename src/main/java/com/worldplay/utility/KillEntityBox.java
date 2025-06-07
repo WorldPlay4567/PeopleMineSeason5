@@ -11,7 +11,6 @@ import java.util.List;
 
 public class KillEntityBox {
 
-
     private static Vec3d vec3d;
 
     public static List<Entity> getEntitiesAt(ServerWorld world, Vec3d position) {

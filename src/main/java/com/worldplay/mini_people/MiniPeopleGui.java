@@ -1,5 +1,6 @@
 package com.worldplay.mini_people;
 
+import com.worldplay.mini_people.people.PeopleDefault;
 import eu.pb4.sgui.api.ClickType;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.SimpleGui;
@@ -28,7 +29,7 @@ public class MiniPeopleGui extends SimpleGui {
                 NbtElement nbtElement = nbtList.get(i);
                 NbtCompound nbtCompound = nbtElement.asCompound().get();
 
-                MiniPeople.People people = MiniPeople.getPeople(nbtCompound.getString("id").get());
+                PeopleDefault people = MiniPeople.getPeople(nbtCompound.getString("id").get());
 
                 setSlot(i, GuiElementBuilder.from(Items.PLAYER_HEAD.getDefaultStack())
                         .setSkullOwner(people.head)
